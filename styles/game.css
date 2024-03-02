@@ -13,6 +13,10 @@
 }
 
 /* for the settings buttons */
+.animated-cell {
+    animation: subtle-grow 250ms ease-in;
+}
+
 .btn-grid {
     display: grid;
     grid-template-columns: repeat(5, 0fr);
@@ -88,6 +92,7 @@
     display: grid;
     grid-template-columns: repeat(5, 0fr);
     grid-gap: 5px;
+    padding: 0 5px;
 }
 
 .game-status {
@@ -112,6 +117,11 @@
     width: fit-content;
 }
 
+.highlighted {
+    border: 1px solid cyan;
+    border-radius: 5px;
+}
+
 .modal-header-1 {
     font-size: calc(var(--master-font-size) * var(--subtitle-factor));
     text-align: center;
@@ -134,20 +144,14 @@
 
 .correct {
     background-color: var(--correct-color) !important;
-
-    /* TBD ANIMATION */
 }
 
 .present {
     background-color: var(--present-color);
-
-    /* TBD ANIMATION */
 }
 
 .incorrect {
     background-color: var(--incorrect-color);
-
-    /* TBD ANIMATION */
 }
 
 .settings-block {
@@ -184,4 +188,19 @@
     font-size: calc(var(--master-font-size) * var(--subtitle-factor));
     transition: font-size 250ms ease;
     font-style: italic;
+}
+
+/* ANIMATIONS */
+@keyframes subtle-grow {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }

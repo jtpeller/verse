@@ -69,6 +69,7 @@ cap
 car
 cat
 caw
+chi
 cod
 cog
 con
@@ -119,7 +120,6 @@ erg
 err
 ewe
 eye
-fag
 fan
 far
 fat

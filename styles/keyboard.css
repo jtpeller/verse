@@ -18,9 +18,9 @@
     
     display: inline-block;
 
-    width: calc(var(--master-font-size) * 2 * var(--key-factor));
+    width: calc(var(--master-font-size) * 2.25 * var(--key-factor));
     min-width: fit-content;
-    height: calc(var(--master-font-size) * 2.5 * var(--key-factor));
+    height: calc(var(--master-font-size) * 3.5 * var(--key-factor));
     margin-right: calc(var(--master-padding-size) * 2 * var(--key-padding-factor));
     padding: 5px;
 

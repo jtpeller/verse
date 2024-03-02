@@ -1,12 +1,12 @@
 #!/usr/bin/python
-
 import sys
 
 n = len(sys.argv)
 length = int(sys.argv[1])
-
 print("running splitter")
 
+# this splits the larger text file (output.txt) 
+# by word length.
 with open("output.txt") as f:
     s = f.read()
     words = s.split("\n")

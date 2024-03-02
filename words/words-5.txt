@@ -943,7 +943,6 @@ elite
 elope
 elude
 elves
-emacs
 embed
 ember
 emits

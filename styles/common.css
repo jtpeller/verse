@@ -17,7 +17,8 @@
     --banner-top-pad: 16px;
 
     --bg-color: rgb(13, 13, 15);
-    --border-color: rgb(46, 46, 46);
+    --toast-color: rgb(29, 29, 29);
+    --border-color: rgb(69, 69, 69);
     --text-color: rgb(211, 211, 211);
 
     --transition-dur: 500ms;
@@ -53,11 +54,16 @@ body {
                 margin-top 250ms ease;
 }
 
+.toast {
+    background-color: var(--toast-color);
+    color: var(--text-color);
+}
+
 /* QUERIES */
 /* LG */
 @media only screen and (min-width: 992px) {
     :root {
-        --master-font-size: 60px;
+        --master-font-size: 56px;
         --banner-top-pad: 24px;
         --game-btn-size: 64px;
     }

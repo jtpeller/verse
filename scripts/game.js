@@ -11,13 +11,15 @@
  */
 document.addEventListener('DOMContentLoaded', function () {
     // CONSTANTS AND GLOBALS
-    const defaultLength = 5;    // the default word length to use
-    const guessRatings = ['incorrect', 'present', 'correct'];
+    const DEFAULT_LEN = 5;    // the default word length to use
+    const GUESS_RATINGS = ['incorrect', 'present', 'correct'];
+    const WIN_RATINGS = ["HOW??", "Spectacular!", "Amazing", "Great", "Nice", "Phew!", "Fooey!"];
+    const TOAST_ID = "toast-msg";
     let bot;
 
     // object that contains user-settable options
     let gameSettings = {
-        wordLength: defaultLength,
+        wordLength: DEFAULT_LEN,
         guessCount: 6, //defaultLength + 1,
         darkMode: true,
     };
@@ -131,9 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // create the settings
             elems.push(
-                createSetting('Dark Mode', 'Darker colors for comfort (this does not do anything yet)', 0, true), 
-                createSetting('Word Length', 'Guess words of any length!', 2, [3, gameSettings.wordLength, 12]),
-                createSetting('Bot Difficulty', 'Influence how smart (or dumb) the Bot is. (this also does not do anything yet)', 1, 3),
+                createSetting('Word Length', 'Press one of these buttons to change the length of the word to guess!', 2, [3, gameSettings.wordLength, 12]),
             );
 
             // append to body
@@ -611,7 +611,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // for use when caller wants to define a rated row
             var cellClass = 'game-cell';
             if (rating != []) {
-                cellClass += ' ' + guessRatings[rating[j]]
+                cellClass += ' ' + GUESS_RATINGS[rating[j]]
             }
 
             // create a cell per row
@@ -660,12 +660,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
 
                 button.onclick = (e) => {
-                    const btn = e.target;
-                    const val = btn.getAttribute('value');
-
-                    document.dispatchEvent(new KeyboardEvent(
-                        'keydown', { 'key': val }
-                    ))
+                    if (!gameVars.completed) {       // only dispatch if game is not complete
+                        const btn = e.target;
+                        const val = btn.getAttribute('value');
+    
+                        document.dispatchEvent(new KeyboardEvent(
+                            'keydown', { 'key': val }
+                        ))
+                    }
                 }
 
                 row.append(button);
@@ -738,6 +740,11 @@ document.addEventListener('DOMContentLoaded', function () {
      * @param event {KeyboardEvent}     the keyboard event that occurred
      */
     function handleInput(e) {
+        // if game is already complete, do nothing
+        if (gameVars.completed) {
+            return;
+        }
+
         // handle backspace or delete
         if (e.key === "Backspace" || e.key === "Delete") {
             e.preventDefault();
@@ -783,16 +790,17 @@ document.addEventListener('DOMContentLoaded', function () {
         // ensure guess is in the word list
         if (!gameWords.includes(guess)) {
             // issue toast that guess needs to be in word list
-            alert('guess needs to be in word list');
+            issueToast('Guess needs to be in word list');
             return;
         }
 
         // check for duplicates
         if (gameVars.guesses.includes(guess)) {
             // issue toast that guess needs to be in word list
-            alert('you already made this guess');
+            issueToast('You already made this guess');
             return;
         }
+        console.log(gameVars.guesses, guess);
 
         // rate the guess on the board
         let rating = rateGuess(guess);
@@ -800,22 +808,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // increment guess counter, as we have eliminated edge cases
         gameVars.nGuesses++;
+        gameVars.guesses.push(guess);       // add the guess
 
         if (guess.toUpperCase() === gameVars.word.toUpperCase()) {
             // create winner modal
             gameVars.winner = true;
             gameVars.completed = true;
+            issueToast(WIN_RATINGS[gameVars.nGuesses-1]);
             document.querySelector('#Ended').click();
-
-            // also disable the grid / keyboard inputs
-            // TBD: disableGrid();
-            // TBD: disableKeyboard();
 
             // add to user's stats
             addToStats(true, gameStats);
+            return;             // no need to execute anything else
         }
 
         // if this executes, game continues, user incorrect
+        highlightRow(gameVars.nGuesses);    // highlight next row
         gameVars.letter = 0;        // reset to next letter
 
         // check if game over
@@ -884,13 +892,13 @@ document.addEventListener('DOMContentLoaded', function () {
         for (var i = 0; i < rating.length; i++) {
             let cell, key;
             let letter = guess[i];
-            let val = guessRatings[rating[i]]
+            let val = GUESS_RATINGS[rating[i]]
             
             cell = getCell(gameVars.nGuesses, i);
             key = document.querySelector(`#key-${letter}`);
 
             cell.classList.add(val);
-            key.classList.add(val);
+            classifyKey(key, val, rating[i])
         }
     }
 
@@ -954,25 +962,33 @@ document.addEventListener('DOMContentLoaded', function () {
         gameVars.winner = false;    // reset winner state
         gameVars.completed = false; // reset completed state
 
+        // highlight which row is current
+        highlightRow(gameVars.nGuesses);
+
         // re-init bot
         initBot();      // wordList remains the same, so I can call this a-OK
     }
 
+    /** highlights the provided row, as indication of which guess we're on */
+    function highlightRow(num) {
+        if (num < 0 || num >= gameSettings.guessCount) {
+            //console.error('Invalid row number: ' + num);
+            return;
+        }
+
+        // loop through all others and remove highlighted
+        for (let i = 0; i < gameSettings.guessCount; i++) {
+            document.querySelector(`#row-${i}`).classList.remove('highlighted');
+        }
+        document.querySelector(`#row-${num}`).classList.add('highlighted');
+    }
+
+    /** returns a randomly generated number between 0 and max */
     function rng(max) {
         return Math.floor(Math.random() * max);
     }
 
-    /**
-     * create() -- function to easily create an element
-     * Essentially, this wraps the Object.assign method, such that
-     * I can now create elements with cleaner code in the main script.
-     * 
-     * @param elem      element type to create (e.g., 'a' or 'div' or 'h1')
-     * @param options   all options that are desired for the element.
-     * 
-     * P.S. why not just write the Object.assign each time to clean up the stack?
-     *   A: maintainability and because I'm lazy and want to type fewer letters.
-     */
+    /** wrapper for Object.assign. elem = element to create (e.g., 'a' or 'div' or 'h1') */
     function create(elem, options) {
         return Object.assign(document.createElement(elem), options)
     }
@@ -1011,6 +1027,42 @@ document.addEventListener('DOMContentLoaded', function () {
         var row = document.querySelector(`#row-${row}`);
         var cell = row.querySelector(`#cell-${cell}`);
         cell.textContent = value;
+        cell.classList.add('animated-cell');
+
+        setTimeout(() => {
+            cell.classList.remove('animated-cell');
+        }, 400);   // after a bit, remove the class
+    }
+
+    /** classify key under certain rules: correct > incorrect > not present */
+    function classifyKey(key, class_name, priority) {
+        let classes = key.classList;    // get current classes
+        let arr = Array.from(classes);
+
+        // check if the key is not classed
+        if (classes.length <= 1) {
+            // just assign provided class
+            key.classList.add(class_name);
+            return;
+        }
+
+        // now, check class priority
+        if (priority == 2) {
+            // always overwrite current to priority 2
+            key.classList.add(class_name);
+        } else if (priority == 1 && !arr.includes(GUESS_RATINGS[2])) {
+            // only assign if current class is lower priority
+            key.classList.add(class_name);
+        } else {    // current class will be higher priority
+            return;
+        }
+    }
+
+    /** issues a bootstrap toast upon errors or successful wins or whatever */
+    function issueToast(msg) {
+        const toast = bootstrap.Toast.getOrCreateInstance(document.getElementById(TOAST_ID));
+        document.querySelector('.toast-body').textContent = msg;   // update msg
+        toast.show();       // show the toast
     }
 });
 

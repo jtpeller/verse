@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en-us">
+<html lang="en-us" dark-bs-theme="dark">
 
 <head>
     <meta charset="utf-8" />
@@ -31,35 +31,30 @@
                 data-bs-title="Hey, maybe it'll be a solution!">
                 Verse!
             </h1>
-            <p class="description"></p>
         </div>
 
         <div class="game">
             <div class="game-btns" id="buttons">
                 <span data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Help" id="Help">
-                    <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                        data-bs-title="Help">
+                    <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Help">
                         <img class="game-svg" src="resources/help.svg" alt="Help">
                     </a>
                 </span>
 
                 <span data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Bot" id="Bot">
-                    <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                        data-bs-title="Bot">
+                    <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bot">
                         <img class="game-svg" src="resources/computer.svg" alt="Bot">
                     </a>
                 </span>
 
                 <span data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Restart" id="Restart">
-                    <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                        data-bs-title="Restart">
+                    <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Restart">
                         <img class="game-svg" src="resources/restart.svg" alt="Restart">
                     </a>
                 </span>
 
                 <span data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Stats" id="Stats">
-                    <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                        data-bs-title="Stats">
+                    <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Stats">
                         <img class="game-svg" src="resources/stats.svg" alt="Stats">
                     </a>
                 </span>
@@ -82,14 +77,26 @@
 
     <span class="d-none" data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Ended" id="Ended"></span>
 
+    <!-- Modal Element -->
     <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content modal-dialog-dark">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="modal-title"></h1>
-                    <button type="button" id="modal-close-btn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" id="modal-close-btn" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modal-body">...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Element -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="toast-msg" class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body"></div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
         </div>
     </div>
