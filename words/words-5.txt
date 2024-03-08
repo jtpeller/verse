@@ -2048,7 +2048,6 @@ pelts
 penal
 pence
 pends
-penis
 penny
 peony
 peppy
@@ -2253,9 +2252,6 @@ range
 rangy
 ranks
 rants
-raped
-raper
-rapes
 rapid
 rarer
 rasps
@@ -2679,6 +2675,7 @@ soups
 sours
 south
 space
+spade
 spank
 spans
 spare
