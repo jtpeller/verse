@@ -696,7 +696,12 @@ document.addEventListener('DOMContentLoaded', function () {
             }));
         }).then(function (data) {       // handle the data
             for (let i = 0; i < data.length; i++) {
-                allWords.push(data[i].toUpperCase().split("\r\n"));
+                // handle line endings because of course everything has to be complicated
+                if (data[i].includes("\r\n")) {
+                    allWords.push(data[i].toUpperCase().split("\r\n"));
+                } else {
+                    allWords.push(data[i].toUpperCase().split("\n"));
+                }
             }
             
             // call startGame now
