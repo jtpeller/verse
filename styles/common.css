@@ -17,15 +17,22 @@
     --banner-top-pad: 16px;
 
     --bg-color: rgb(13, 13, 15);
-    --toast-color: rgb(29, 29, 29);
     --border-color: rgb(69, 69, 69);
+    --toast-color: rgb(29, 29, 29);
     --text-color: rgb(211, 211, 211);
 
-    --transition-dur: 500ms;
+    --square-color: rgb(11, 12, 13);
+    --correct-color: rgb(43, 110, 43);
+    --present-color: rgb(146, 144, 29);
+    --incorrect-color: rgb(69, 33, 33);
+
+    --transition-dur: 150ms;
+
+    --system-ui: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 body {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: var(--system-ui);
     background-color: var(--bg-color);
     color: var(--text-color);
     min-height: 100%;
@@ -46,12 +53,74 @@ body {
     fill: var(--text-color) !important;
 }
 
+.btn-item {
+    display: flex;
+    position: relative;
+    text-align: center !important;
+    border-radius: 0px;
+    background-color: var(--square-color);
+    border: 2px solid var(--border-color) !important;
+
+    height: 5rem;
+    width: 75%;
+    margin: auto;
+    margin-bottom: 2rem;
+
+    font-size: calc(var(--master-font-size) * var(--subtitle-factor));
+
+    transition: background-color var(--transition-dur) ease,
+                font-size var(--transition-dur) ease;
+}
+
+/* this isn't pretty but it gets the job done */
+.level-0 > .btn-item:hover {
+    background-color: var(--correct-color);
+}
+
+.level-1 > .btn-item:hover {
+    background-color: var(--present-color);
+}
+
+.level-2 > .btn-item:hover {
+    background-color: var(--incorrect-color);
+}
+
+.level-3 > .btn-item:hover {
+    background-color: var(--toast-color);
+}
+
+.btn-item:hover>.btn-link {
+    transform: scale(1.1);
+}
+
+.btn-link {
+    font-size: 1.4rem;
+    margin: auto;
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--text-color);
+
+    transform: scale(1);
+
+    transition: transform var(--transition-dur) ease-in-out;
+}
+
+.btn-link:hover {
+    /* override when you hover on the link text itself */
+    color: var(--text-color);
+}
+
+.link {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
 .title {
     width: fit-content;
     margin-top: var(--banner-top-pad);
     font-size: calc(var(--master-font-size) * var(--title-factor));
-    transition: font-size 250ms ease,
-                margin-top 250ms ease;
+    transition: font-size var(--transition-dur) ease,
+                margin-top var(--transition-dur) ease;
 }
 
 .toast {

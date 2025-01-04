@@ -499,6 +499,7 @@ calms
 calve
 camel
 camps
+campy
 canal
 candy
 caner
@@ -563,6 +564,7 @@ child
 chili
 chill
 chime
+chimp
 chink
 chins
 chips
@@ -575,6 +577,7 @@ chord
 chore
 chose
 chuck
+chump
 chunk
 churn
 chute
@@ -943,6 +946,7 @@ elite
 elope
 elude
 elves
+emacs
 embed
 ember
 emits
@@ -1362,6 +1366,7 @@ hardy
 harem
 hares
 harms
+harpy
 harry
 harsh
 haste
@@ -2014,6 +2019,7 @@ panty
 papal
 paper
 parch
+pared
 pares
 parry
 parse
@@ -2049,6 +2055,7 @@ pelts
 penal
 pence
 pends
+penis
 penny
 peony
 peppy
@@ -2253,6 +2260,9 @@ range
 rangy
 ranks
 rants
+raped
+raper
+rapes
 rapid
 rarer
 rasps
@@ -3130,6 +3140,7 @@ waken
 wakes
 wales
 walks
+walls
 waltz
 waned
 wanes
@@ -3191,7 +3202,9 @@ wider
 widow
 width
 wield
+wilds
 wiles
+wills
 wilts
 wince
 winds

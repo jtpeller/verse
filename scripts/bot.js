@@ -2,7 +2,7 @@
 // = bot.js
 // =  Description   : Implements bot functionality
 // =  Author        : jtpeller
-// =  Date          : 2023-12-31
+// =  Date          : 2023.12.31
 // =================================================================
 'use strict';
 
@@ -28,7 +28,7 @@ class Bot {
 
         // create now
         this.regex = Array(this.length).fill(`[ABCDEFGHIJKLMNOPQRSTUVWXYZ]+`);
-        this.FACTOR = 10;       // factor to weight flagged letters
+        this.FACTOR = 2;       // factor to weight flagged letters
 
         // create later
         this.nGuesses = 0;      // number of guesses made    
@@ -60,22 +60,22 @@ class Bot {
         for (let i = 0; i < this.maxGuesses; i++) {
             // step 1: count
             this.countUniqueLetters();
-            if (this.DEBUG) { this.log(this.prob, 'Letters:'); }
+            this.log(this.prob, 'Letters:');
 
             // step 2: score
             this.scoreEachWord();
-            if (this.DEBUG) { this.log(this.scores, 'Scores:'); }
+            this.log(this.scores, 'Scores:');
 
             // step 3: select
             var guess = this.selectGuessFromScore();
             this.guesses.push(guess);
             this.nGuesses++;
-            if (this.DEBUG) { this.log(guess, "Guess:"); }
+            this.log(guess, "Guess:");
 
             // step 4: rate
             var rating = this.rate(guess);
             this.ratings.push(rating);
-            if (this.DEBUG) { this.log(rating, 'Rating:'); }
+            this.log(rating, 'Rating:');
 
             // step 5: check if correct
             if (!rating.includes(0) && !rating.includes(1)) {
@@ -204,29 +204,6 @@ class Bot {
     }
 
     /**
-     * function used by instantiator to generate the next guess.
-     * @param {int[]} previousRating    rating of each letter of the guess
-     * | 0 = not present, 1 = present, 2 = correct
-     */
-//    computeNextGuess(previousRating) {
-//        if (previousRating.length === this.length) {
-//            // update bot's word list based on previous rating
-//            this.updateWords(previousRating);
-//
-//            // update the probabilities
-//            this.countUniqueLetters();
-//
-//            // update the scores
-//            this.scoreEachWord();
-//
-//            // generate the best guess
-//            return this.selectGuessFromScore();
-//        } else {        // rating undefined or otherwise missing, meaning this is the first guess
-//            this.selectGuessFromScore();
-//        }
-//    }
-
-    /**
      * updateRegex() - computes/updates the regex
      */
     updateRegex(guess, rating) {
@@ -332,6 +309,8 @@ class Bot {
 
     // log value
     log(value, name="") {
-        console.log(name, JSON.parse(JSON.stringify(value)));
+        if (this.DEBUG) {
+            console.log(name, JSON.parse(JSON.stringify(value)));
+        }
     }
 }

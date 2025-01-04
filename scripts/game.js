@@ -2,7 +2,7 @@
 // = game.js
 // =  Description   : Implements game functionality
 // =  Author        : jtpeller
-// =  Date          : 2023-12-24
+// =  Date          : 2023.12.24
 // =================================================================
 'use strict';
 
@@ -13,9 +13,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // CONSTANTS AND GLOBALS
     const DEFAULT_LEN = 5;    // the default word length to use
     const GUESS_RATINGS = ['incorrect', 'present', 'correct'];
-    const WIN_RATINGS = ["HOW??", "Spectacular!", "Amazing", "Great", "Nice", "Phew!", "Fooey!"];
+    const WIN_RATINGS = ["HOW??", "Spectacular!", "Amazing!", "Great!", "Nice!", "Phew!", "Fooey!"];
     const TOAST_ID = "toast-msg";
-    const DEBUG = true;
+    const DEBUG = false;
     let bot;
 
     // object that contains user-settable options
@@ -391,7 +391,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // ... are you sure?
             elems.push(create('h1', {
                 className: "modal-header-2",
-                textContent: "Are you sure you want to restart? This won't affect your stats...",
+                textContent: "Are you sure you want to restart? You'll keep your stats...",
             }))
 
             // ... confirm buttons
@@ -462,7 +462,12 @@ document.addEventListener('DOMContentLoaded', function () {
             // helper function to aid in creating each of the stats
             function createStat(idx, label, stats) {
                 var temp = create('div', { className: "stat text-center" })
-                temp.append(create('h1', { className: "stat-val", textContent: stats[idx] }))
+                // properly treat percentages
+                if (label.includes("%")) {
+                    temp.append(create('h1', { className: "stat-val", textContent: stats[idx]*100+"%" }))
+                } else {
+                    temp.append(create('h1', { className: "stat-val", textContent: stats[idx] }))
+                }
                 temp.append(create('p', { className: "stat-label", textContent: label }))
                 return temp;
             }
@@ -739,7 +744,6 @@ document.addEventListener('DOMContentLoaded', function () {
      * selectWord() - initialize the word
      */
     function selectWord() {
-        // words to test: relic / block / verge / equip
         gameVars.word = gameWords[rng(gameWords.length)].toUpperCase();
     }
 

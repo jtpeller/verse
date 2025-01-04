@@ -624,6 +624,7 @@ gift
 gild
 gill
 gilt
+gimp
 gins
 gird
 girl
@@ -1276,6 +1277,7 @@ rams
 rang
 rank
 rant
+rape
 raps
 rapt
 rare

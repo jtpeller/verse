@@ -6974,6 +6974,7 @@ camps
 campsite
 campus
 campuses
+campy
 can
 Canaan
 Canada
@@ -7979,6 +7980,7 @@ chewing
 chews
 Cheyenne
 Cheyennes
+chi
 Chiang
 chic
 Chicago
@@ -8033,6 +8035,7 @@ chimera
 chimes
 chimney
 chimneys
+chimp
 chimpanzee
 chin
 China
@@ -8191,6 +8194,7 @@ chuckled
 chuckles
 chucks
 chum
+chump
 Chungking
 chunk
 chunks
@@ -12357,6 +12361,7 @@ detest
 detestable
 detested
 detour
+detonate
 detract
 detractor
 detractors
@@ -19511,7 +19516,7 @@ harp
 harper
 harpers
 harping
-Harpy
+harpy
 harried
 harrier
 Harriet
@@ -23624,6 +23629,7 @@ Lafayette
 lag
 lager
 lagers
+laggy
 lagoon
 lagoons
 Lagos
@@ -29468,6 +29474,7 @@ pardoners
 pardoning
 pardons
 pare
+pared
 paregoric
 parent
 parentage
@@ -35865,6 +35872,7 @@ Sartre
 sash
 Saskatchewan
 Saskatoon
+sassy
 sat
 Satan
 satanic
@@ -38430,6 +38438,7 @@ Spacewar
 spacing
 spacings
 spacious
+spade
 spaded
 spades
 spading
@@ -43941,6 +43950,7 @@ violinists
 violins
 viper
 vipers
+viral
 Virgil
 virgin
 Virginia
@@ -44199,6 +44209,7 @@ wallowed
 wallowing
 wallows
 Walls
+walls
 walnut
 walnuts
 Walpole
@@ -44778,6 +44789,7 @@ wilderness
 wildest
 wildly
 wildness
+wilds
 wile
 wiles
 Wiley
@@ -44814,6 +44826,7 @@ Willoughby
 willow
 willows
 Wills
+wills
 Willy
 Wilma
 Wilmette

@@ -5876,6 +5876,7 @@ camps
 campsite
 campus
 campuses
+campy
 can
 canal
 canals
@@ -6691,6 +6692,7 @@ chewer
 chewers
 chewing
 chews
+chi
 chic
 chicanery
 chick
@@ -6733,6 +6735,7 @@ chimera
 chimes
 chimney
 chimneys
+chimp
 chimpanzee
 chin
 chink
@@ -6846,6 +6849,7 @@ chuckled
 chuckles
 chucks
 chum
+chump
 chunk
 chunks
 chunky
@@ -10659,6 +10663,7 @@ detest
 detestable
 detested
 detour
+detonate
 detract
 detractor
 detractors
@@ -16804,6 +16809,7 @@ harp
 harper
 harpers
 harping
+harpy
 harried
 harrier
 harrow
@@ -20088,6 +20094,7 @@ ladylike
 lag
 lager
 lagers
+laggy
 lagoon
 lagoons
 lags
@@ -24666,6 +24673,7 @@ pardoners
 pardoning
 pardons
 pare
+pared
 paregoric
 parent
 parentage
@@ -30378,6 +30386,7 @@ sardine
 sardonic
 sari
 sash
+sassy
 sat
 satanic
 satchel
@@ -32613,6 +32622,7 @@ spacesuit
 spacing
 spacings
 spacious
+spade
 spaded
 spades
 spading
@@ -37527,6 +37537,7 @@ violinists
 violins
 viper
 vipers
+viral
 virgin
 virginity
 virgins
@@ -37731,6 +37742,7 @@ wallow
 wallowed
 wallowing
 wallows
+walls
 walnut
 walnuts
 walrus
@@ -38177,6 +38189,7 @@ wilderness
 wildest
 wildly
 wildness
+wilds
 wile
 wiles
 wiliness
@@ -38189,6 +38202,7 @@ willingly
 willingness
 willow
 willows
+wills
 wilt
 wilted
 wilting

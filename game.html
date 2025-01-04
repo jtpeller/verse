@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html lang="en-us" dark-bs-theme="dark">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Verse! | Can you beat the Bot?</title>
+
+    <!-- CSS & Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel='stylesheet' href='styles/common.css'>
+    <link rel='stylesheet' href='styles/keyboard.css'>
+    <link rel='stylesheet' href='styles/game.css'>
+
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <script src="scripts/bot.js" type="text/javascript"></script>
+    <script src="scripts/game.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="container text-center">
+        <div class="header">
+            <h1 class="title mx-auto" data-bs-toggle="tooltip" data-bs-placement="right"
+                data-bs-title="Hey, maybe it'll be a solution!">
+                <a class="link" href="/index.html">Verse!</a>
+            </h1>
+        </div>
+
+        <div class="game">
+            <div class="game-btns" id="buttons">
+                <span data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Help" id="Help">
+                    <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Help">
+                        <img class="game-svg" src="resources/help.svg" alt="Help">
+                    </a>
+                </span>
+
+                <span data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Bot" id="Bot">
+                    <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bot">
+                        <img class="game-svg" src="resources/computer.svg" alt="Bot">
+                    </a>
+                </span>
+
+                <span data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Restart" id="Restart">
+                    <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Restart">
+                        <img class="game-svg" src="resources/restart.svg" alt="Restart">
+                    </a>
+                </span>
+
+                <span data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Stats" id="Stats">
+                    <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Stats">
+                        <img class="game-svg" src="resources/stats.svg" alt="Stats">
+                    </a>
+                </span>
+
+                <span data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Settings" id="Settings">
+                    <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        data-bs-title="Settings">
+                        <img class="game-svg" src="resources/settings.svg" alt="Settings">
+                    </a>
+                </span>
+            </div>
+
+            <div class="game-board" id="board">
+                <div class="game-grid" id="grid"></div>
+            </div>
+
+            <div class="keyboard" id="keyboard"></div>
+        </div>
+    </div>
+
+    <span class="d-none" data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Ended" id="Ended"></span>
+
+    <!-- Modal Element -->
+    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content modal-dialog-dark">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modal-title"></h1>
+                    <button type="button" id="modal-close-btn" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-body">...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Element -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="toast-msg" class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body"></div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
