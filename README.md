@@ -10,7 +10,5 @@ View the code in your browser at: [Verse](https://jtpeller.github.io/verse)
 ## Upcoming Changes
 
 I would like to implement the following changes:
- - Call to action after winning/losing to restart the game
  - A solving page. Would like to have a page that can find the word given clues.
  - Hints mode. Gives hints like probabilities of next letter to narrow down more.
- - AI improvements

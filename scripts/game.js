@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const GUESS_RATINGS = ['incorrect', 'present', 'correct'];
     const WIN_RATINGS = ["HOW??", "Spectacular!", "Amazing", "Great", "Nice", "Phew!", "Fooey!"];
     const TOAST_ID = "toast-msg";
+    const DEBUG = true;
     let bot;
 
     // object that contains user-settable options
@@ -695,7 +696,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }));
         }).then(function (data) {       // handle the data
             for (let i = 0; i < data.length; i++) {
-                allWords.push(data[i].toUpperCase().split("\n"));
+                allWords.push(data[i].toUpperCase().split("\r\n"));
             }
             
             // call startGame now
@@ -713,6 +714,7 @@ document.addEventListener('DOMContentLoaded', function () {
             length: gameSettings.wordLength,
             guesses: gameSettings.guessCount,
             rateFunction: rateGuess,
+            DEBUG: DEBUG,
         }
 
         // instantiate the bot
@@ -732,6 +734,7 @@ document.addEventListener('DOMContentLoaded', function () {
      * selectWord() - initialize the word
      */
     function selectWord() {
+        // words to test: relic / block / verge / equip
         gameVars.word = gameWords[rng(gameWords.length)].toUpperCase();
     }
 
@@ -791,6 +794,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!gameWords.includes(guess)) {
             // issue toast that guess needs to be in word list
             issueToast('Guess needs to be in word list');
+
+            // debug msg
+            if (DEBUG) {
+                console.log("Guess", guess, "not in word list");
+                console.log("Word List:", gameWords);
+            }
+
             return;
         }
 
@@ -800,7 +810,11 @@ document.addEventListener('DOMContentLoaded', function () {
             issueToast('You already made this guess');
             return;
         }
-        console.log(gameVars.guesses, guess);
+
+        // debug msg
+        if (DEBUG) {
+            console.log(gameVars.guesses, guess);
+        }
 
         // rate the guess on the board
         let rating = rateGuess(guess);
@@ -816,6 +830,7 @@ document.addEventListener('DOMContentLoaded', function () {
             gameVars.completed = true;
             issueToast(WIN_RATINGS[gameVars.nGuesses-1]);
             document.querySelector('#Ended').click();
+            document.querySelector('#Restart').classList.add('spin');
 
             // add to user's stats
             addToStats(true, gameStats);
@@ -931,9 +946,10 @@ document.addEventListener('DOMContentLoaded', function () {
      */
     function startGame() {
         gameVars.winner = false;
-        const classesToRemove = ['correct', 'present', 'incorrect'];
-
+        document.querySelector('#Restart').classList.remove('spin');
+        
         // clear the grid
+        const classesToRemove = ['correct', 'present', 'incorrect'];
         for (var i = 0; i < gameSettings.guessCount; i++) {
             for (var j = 0; j < gameSettings.wordLength; j++) {
                 // empty cell contents

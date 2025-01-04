@@ -2,7 +2,8 @@
     --square-color: rgb(11, 12, 13);
     --correct-color: rgb(43, 110, 43);
     --present-color: rgb(146, 144, 29);
-    --incorrect-color: rgb(69, 69, 69);
+    --incorrect-color: rgb(69, 33, 33);
+    --spin-color: rgb(33, 197, 209);
     --description-text-color: rgb(126, 126, 126);
 }
 
@@ -172,6 +173,10 @@
     display: inline-block;
 }
 
+.spin {
+    animation: spin 2s infinite linear;
+}
+
 .stats {
     display: flex;
 }
@@ -202,5 +207,14 @@
 
     100% {
         transform: scale(1);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
     }
 }

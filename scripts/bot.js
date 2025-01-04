@@ -11,9 +11,11 @@ class Bot {
      * builds the bot to be used for the game
      * @param {Object} props            | contains these fields:
      *      @field {String[]} wordList  | word list (all same length)
+     *      @field {int} wordCount      | wordList array length
      *      @field {int} length         | word length
-     *      @field {int} guesses        | maximum number of guesses
+     *      @field {int} maxGuesses     | maximum number of guesses
      *      @field {function} rate      | function from instantiator to rate a guess
+     *      @field {boolean} DEBUG      | used for output debugging.
      */
     constructor(props) {
         // pulled from props
@@ -22,17 +24,20 @@ class Bot {
         this.length = props.length;
         this.maxGuesses = props.guesses;
         this.rate = props.rateFunction;
+        this.DEBUG = props.DEBUG | false;
 
         // create now
         this.regex = Array(this.length).fill(`[ABCDEFGHIJKLMNOPQRSTUVWXYZ]+`);
+        this.FACTOR = 10;       // factor to weight flagged letters
 
         // create later
-        this.nGuesses = 0;
-        this.prob = [];
-        this.scores = [];
-        this.guesses = [];
-        this.ratings = [];
-        this.correct = false;
+        this.nGuesses = 0;      // number of guesses made    
+        this.prob = [];         // letter counts
+        this.scores = [];       // score based on how many words will be eliminated
+        this.guesses = [];      // array of guesses. Array<String>
+        this.ratings = [];      // array of ratings. Array<Array[int]>
+        this.correct = false;   // whether the bot found the correct word.
+        this.flagged = [];      // array of letters marked "present"
 
         // starts the game
         this.PlayGame();
@@ -54,19 +59,23 @@ class Bot {
          */
         for (let i = 0; i < this.maxGuesses; i++) {
             // step 1: count
-            this.countEachLetter();
+            this.countUniqueLetters();
+            if (this.DEBUG) { this.log(this.prob, 'Letters:'); }
 
             // step 2: score
             this.scoreEachWord();
+            if (this.DEBUG) { this.log(this.scores, 'Scores:'); }
 
             // step 3: select
             var guess = this.selectGuessFromScore();
             this.guesses.push(guess);
             this.nGuesses++;
+            if (this.DEBUG) { this.log(guess, "Guess:"); }
 
             // step 4: rate
             var rating = this.rate(guess);
             this.ratings.push(rating);
+            if (this.DEBUG) { this.log(rating, 'Rating:'); }
 
             // step 5: check if correct
             if (!rating.includes(0) && !rating.includes(1)) {
@@ -91,23 +100,42 @@ class Bot {
      * using wordList, the bot calculates the probability
      * of each letter existing
      */
-    countEachLetter() {
-        // rename because I am lazy
-        const len = this.wordCount;
-        const list = this.wordList;
-        
+    countUniqueLetters() {
         // letters holds the count of each letter
-        let letters = Array(26).fill(0);
+        let letters = {};
             
         // loop through list
-        for (let i = 0; i < len; i++) {
-            var word = list[i];
+        for (let i = 0; i < this.wordCount; i++) {
+            // Set to avoid skewing toward multi-occurrence letters
+            // (e.g., SULLY has 2 L's but only count: S, U, L, Y)
+            var word = Array.from(new Set(this.wordList[i]));
             var wordlen = word.length;
-            const offset = "A".charCodeAt(0)
+
+            // loop through the word
             for (var j = 0; j < wordlen; j++) {
-                var letter = word.charCodeAt(j);
-                letters[letter-offset]++;
+                // extract letter
+                var letter = word[j];
+
+                // check range to ensure it is a letter.
+                if (/^[A-Z]$/.test(letter) == false) {
+                    continue;
+                }
+
+                // count the letter. if it hasn't been experienced yet, initialize with 1.
+                if (letters[letter]) {
+                    letters[letter]++;
+                } else {
+                    letters[letter] = 1;    // initial count
+                }
             }
+        }
+
+        // afterward, make sure to weight flagged letters more heavily.
+        // remove the flagged letter after use.
+        for (let i = 0; i < this.flagged.length; i++) {
+            var flag = this.flagged[i];
+            letters[flag] *= this.FACTOR;
+            this.flagged.splice(this.flagged.indexOf(flag), 1);
         }
 
         // store it for later use
@@ -120,13 +148,10 @@ class Bot {
      * (note: this has to access this.prob, leave as method)
      */
     getProbabilityOfLetter(letter) {
-        if (letter < 'A' || letter > 'Z') {
+        if (!this.isAlpha(letter)) {
             return 1;       // no effect
         }
-
-        const offset = "A".charCodeAt(0)
-        var idx = letter.charCodeAt(0);
-        return this.prob[idx-offset];
+        return this.prob[letter];
     }
 
     /**
@@ -183,23 +208,23 @@ class Bot {
      * @param {int[]} previousRating    rating of each letter of the guess
      * | 0 = not present, 1 = present, 2 = correct
      */
-    computeNextGuess(previousRating) {
-        if (previousRating.length === this.length) {
-            // update word list based on previous rating
-            this.updateWords(previousRating);
-
-            // update the probabilities
-            this.countEachLetter();
-
-            // update the scores
-            this.scoreEachWord();
-
-            // generate the best guess
-            return this.selectGuessFromScore();
-        } else {        // rating undefined or otherwise missing, meaning this is the first guess
-            this.selectGuessFromScore();
-        }
-    }
+//    computeNextGuess(previousRating) {
+//        if (previousRating.length === this.length) {
+//            // update bot's word list based on previous rating
+//            this.updateWords(previousRating);
+//
+//            // update the probabilities
+//            this.countUniqueLetters();
+//
+//            // update the scores
+//            this.scoreEachWord();
+//
+//            // generate the best guess
+//            return this.selectGuessFromScore();
+//        } else {        // rating undefined or otherwise missing, meaning this is the first guess
+//            this.selectGuessFromScore();
+//        }
+//    }
 
     /**
      * updateRegex() - computes/updates the regex
@@ -249,6 +274,10 @@ class Bot {
                 }
             }
         }
+
+        if (this.DEBUG) {
+            this.log(this.regex, "Regex:");
+        }
     }
 
     /**
@@ -263,6 +292,15 @@ class Bot {
 
         // update regex
         this.updateRegex(guess, rating);
+
+        // update flagged letters
+        for (let i = 0; i < rating.length; i++) {
+            // flag any letter where rating is 1 ("present").
+            if (rating[i] == 1) {
+                this.flagged.push(guess[i]);
+            }
+        }
+        this.log(this.flagged, "Flagged:");
 
         // word will match this combined expression:
         var r = '';
@@ -285,5 +323,15 @@ class Bot {
 
         this.wordList = structuredClone(temp);
         this.wordCount = this.wordList.length;
+    }
+
+    // check if word contains only A-Z.
+    isAlpha(word) {
+        return /^[A-Z]+$/.test(word);
+    }
+
+    // log value
+    log(value, name="") {
+        console.log(name, JSON.parse(JSON.stringify(value)));
     }
 }

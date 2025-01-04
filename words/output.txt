@@ -15837,6 +15837,8 @@ gills
 gilt
 gimmick
 gimmicks
+gimp
+gimps
 gin
 ginger
 gingerbread
@@ -36304,6 +36306,7 @@ tutors
 twain
 twang
 twas
+tweak
 tweed
 twelfth
 twelve

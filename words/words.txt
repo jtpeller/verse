@@ -18308,6 +18308,8 @@ gilt
 Gimbel
 gimmick
 gimmicks
+gimp
+gimps
 gin
 Gina
 ginger
@@ -42570,6 +42572,7 @@ Tuttle
 twain
 twang
 twas
+tweak
 tweed
 twelfth
 twelve
