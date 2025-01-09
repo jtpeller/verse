@@ -5039,8 +5039,6 @@ Bissau
 bistable
 bistate
 bit
-bitch
-bitches
 bite
 biter
 biters
@@ -5166,7 +5164,6 @@ blare
 blared
 blares
 blaring
-blase
 blaspheme
 blasphemed
 blasphemes
@@ -6497,6 +6494,7 @@ bumps
 bumptious
 bumptiously
 bumptiousness
+bumpy
 bums
 bun
 bunch
@@ -16766,6 +16764,7 @@ fixtures
 Fizeau
 fizzle
 fizzled
+fjord
 flabbergast
 flabbergasted
 flack
@@ -17776,6 +17775,7 @@ fungible
 fungicide
 fungus
 funk
+funky
 funnel
 funneled
 funneling
@@ -19091,6 +19091,8 @@ guards
 Guatemala
 Guatemalan
 gubernatorial
+guck
+gucks
 Guelph
 Guenther
 guerrilla
@@ -33049,10 +33051,6 @@ rants
 Raoul
 rap
 rapacious
-rape
-raped
-raper
-rapes
 Raphael
 rapid
 rapidity
@@ -40909,6 +40907,8 @@ targeting
 targets
 tariff
 tariffs
+tarp
+tarps
 tarry
 Tarrytown
 tart
@@ -43813,6 +43813,7 @@ viable
 viably
 vial
 vials
+vibex
 vibrate
 vibrated
 vibrating

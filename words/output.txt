@@ -4273,8 +4273,6 @@ bisques
 bistable
 bistate
 bit
-bitch
-bitches
 bite
 biter
 biters
@@ -4382,7 +4380,6 @@ blare
 blared
 blares
 blaring
-blase
 blaspheme
 blasphemed
 blasphemes
@@ -5501,6 +5498,7 @@ bumps
 bumptious
 bumptiously
 bumptiousness
+bumpy
 bums
 bun
 bunch
@@ -14561,6 +14559,7 @@ fixture
 fixtures
 fizzle
 fizzled
+fjord
 flabbergast
 flabbergasted
 flack
@@ -15438,6 +15437,7 @@ fungible
 fungicide
 fungus
 funk
+funky
 funnel
 funneled
 funneling
@@ -16486,6 +16486,8 @@ guardianship
 guarding
 guards
 gubernatorial
+guck
+gucks
 guerrilla
 guerrillas
 guess
@@ -27861,10 +27863,6 @@ ranting
 rants
 rap
 rapacious
-rape
-raped
-raper
-rapes
 rapid
 rapidity
 rapidly
@@ -34862,6 +34860,8 @@ targeting
 targets
 tariff
 tariffs
+tarp
+tarps
 tarry
 tart
 tartly
@@ -37427,6 +37427,7 @@ viable
 viably
 vial
 vials
+vibex
 vibrate
 vibrated
 vibrating

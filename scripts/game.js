@@ -15,8 +15,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const GUESS_RATINGS = ['incorrect', 'present', 'correct'];
     const WIN_RATINGS = ["HOW??", "Spectacular!", "Amazing!", "Great!", "Nice!", "Phew!", "Fooey!"];
     const TOAST_ID = "toast-msg";
-    const DEBUG = false;
-    let bot;
+    const DEBUG = true;
+    let mgr;
+    let util = new Utils(DEBUG);
 
     // object that contains user-settable options
     let gameSettings = {
@@ -348,7 +349,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 textContent: `Bot Guesses`,
             }))
 
-            const showGuesses = gameVars.completed && bot.guesses[0] !== undefined;
+            const showGuesses = gameVars.completed && mgr.bot.guesses[0] !== undefined;
 
             if (showGuesses) {
                 elems.push(create('p', {
@@ -367,10 +368,10 @@ document.addEventListener('DOMContentLoaded', function () {
             for (let i = 0; i < gameSettings.guessCount; i++) {
                 // we only SHOW the letters if user completed the game
                 // and the guess exists. Always show the rating
-                if (gameVars.completed && bot.guesses[i] !== undefined) {
-                    botGrid.append(createRow(i, 'bot', bot.ratings[i], bot.guesses[i]));
+                if (showGuesses) {
+                    botGrid.append(createRow(i, 'bot', mgr.ratings[i], mgr.bot.guesses[i]));
                 } else {
-                    botGrid.append(createRow(i, 'bot', bot.ratings[i]));
+                    botGrid.append(createRow(i, 'bot', mgr.ratings[i]));
                 }
             }
             elems.push(botGrid);
@@ -416,9 +417,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
 
+            // on the restart panel, if user completed game, enable show-win-screen button
+            var showEndScreen = create('button', {
+                className: "btn btn-success w-100 m-1",
+                innerText: "Show End Screen",
+                onclick: (e) => {
+                    document.querySelector('#modal-close-btn').click();
+                    setTimeout(() => {
+                        document.querySelector('#Ended').click();   // trigger ending modal.
+                    }, 250);
+                }
+            })
+
             // add these buttons to the div
             div.append(cancel);
             div.append(restart);
+            if (gameVars.completed) {
+                div.append(showEndScreen);
+            }
 
             // add div to elems
             elems.push(div);
@@ -504,22 +520,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // ... Bot guess count
                 elems.push(create('p', {
-                    textContent: `The Bot Guessed in ${bot.nGuesses} guesses.`,
+                    textContent: `The Bot Guessed in ${mgr.bot.nGuesses} guesses.`,
                 }));
 
                 // ... determination of how many guesses better or worse user did
                 let guessDiff;
-                if (gameVars.nGuesses < bot.nGuesses) {
+                if (gameVars.nGuesses < mgr.bot.nGuesses) {
                     guessDiff = create('p', {
-                        textContent: `That means you guessed ${Math.abs(gameVars.nGuesses - bot.nGuesses)} fewer than the Bot! Great work!`
+                        textContent: `That means you guessed ${Math.abs(gameVars.nGuesses - mgr.bot.nGuesses)} fewer than the Bot! Great work!`
                     })
-                } else if (gameVars.nGuesses == bot.nGuesses) {
+                } else if (gameVars.nGuesses == mgr.bot.nGuesses) {
                     guessDiff = create('p', {
                         textContent: `That means you tied with the Bot! Not bad!`
                     })
                 } else {        // bot did better
                     guessDiff = create('p', {
-                        textContent: `That means you guessed ${gameVars.nGuesses - bot.nGuesses} more than the Bot! Better luck next time!`
+                        textContent: `That means you guessed ${gameVars.nGuesses - mgr.bot.nGuesses} more than the Bot! Better luck next time!`
                     })
                 }
 
@@ -606,7 +622,7 @@ document.addEventListener('DOMContentLoaded', function () {
      * @param {string} [value='']   | value for the row to take on (i.e., a user's/bot's guess)
      */
     function createRow(i, prefix = '', rating = [], value = '', ) {
-        var row = create('div', { 
+        var row = util.create('div', { 
             className: "game-row",
             style: `grid-template-columns: repeat(${gameSettings.wordLength}, 0fr);`,
             id: `${prefix}row-${i}` 
@@ -621,7 +637,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             // create a cell per row
-            row.append(create('div', { 
+            row.append(util.create('div', { 
                 className: cellClass,
                 id: `cell-${j}`,
                 textContent: value[j],
@@ -715,23 +731,30 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /**
-     * initBot() - creates the instance of the bot
+     * initManager() - creates the instance of the bot
      */
-    function initBot() {
-        // create the props
+    function initManager() {
+        // props is for the Manager
         const props = {
+            mode: 2,    //Manager.MODE.ELIM,    // Eliminator bot.
+            maxGuesses: gameSettings.guessCount,
+            rate: rateGuess,
+            DEBUG: DEBUG,
+        }
+
+        // bot_props goes to bot via Manager
+        const bot_props = {
             wordList: structuredClone(gameWords),
             length: gameSettings.wordLength,
             guesses: gameSettings.guessCount,
-            rateFunction: rateGuess,
             DEBUG: DEBUG,
         }
 
         // instantiate the bot
-        bot = new Bot(props);
+        mgr = new Manager(props, bot_props);
 
         // figure out why we left the loop (win or lose?)
-        if (bot.correct) {
+        if (mgr.bot.correct) {
             // bot won, adjust stats
             addToStats(true, botStats);
         } else {
@@ -744,7 +767,8 @@ document.addEventListener('DOMContentLoaded', function () {
      * selectWord() - initialize the word
      */
     function selectWord() {
-        gameVars.word = gameWords[rng(gameWords.length)].toUpperCase();
+        // interesting words to test: SLAYS, CORNY
+        gameVars.word = gameWords[util.rng(gameWords.length)].toUpperCase();
     }
 
     /**
@@ -991,13 +1015,13 @@ document.addEventListener('DOMContentLoaded', function () {
         highlightRow(gameVars.nGuesses);
 
         // re-init bot
-        initBot();      // wordList remains the same, so I can call this a-OK
+        initManager();      // wordList remains the same, so I can call this a-OK
     }
 
     /** highlights the provided row, as indication of which guess we're on */
     function highlightRow(num) {
         if (num < 0 || num >= gameSettings.guessCount) {
-            //console.error('Invalid row number: ' + num);
+            if (DEBUG) { console.error('Invalid row number: ' + num); }
             return;
         }
 
@@ -1006,11 +1030,6 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector(`#row-${i}`).classList.remove('highlighted');
         }
         document.querySelector(`#row-${num}`).classList.add('highlighted');
-    }
-
-    /** returns a randomly generated number between 0 and max */
-    function rng(max) {
-        return Math.floor(Math.random() * max);
     }
 
     /** wrapper for Object.assign. elem = element to create (e.g., 'a' or 'div' or 'h1') */

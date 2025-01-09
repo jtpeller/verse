@@ -309,7 +309,6 @@ birch
 birds
 birth
 bison
-bitch
 biter
 bites
 blabs
@@ -319,7 +318,6 @@ blame
 bland
 blank
 blare
-blase
 blast
 blaze
 bleak
@@ -457,6 +455,7 @@ bulky
 bulls
 bully
 bumps
+bumpy
 bunch
 bunks
 bunny
@@ -1085,6 +1084,7 @@ fives
 fixed
 fixer
 fixes
+fjord
 flack
 flags
 flail
@@ -1189,6 +1189,7 @@ fumed
 fumes
 funds
 fungi
+funky
 funny
 furry
 fused
@@ -1328,6 +1329,7 @@ gruff
 grunt
 guano
 guard
+gucks
 guess
 guest
 guide
@@ -2260,9 +2262,6 @@ range
 rangy
 ranks
 rants
-raped
-raper
-rapes
 rapid
 rarer
 rasps
@@ -2872,6 +2871,7 @@ taped
 taper
 tapes
 tardy
+tarps
 tarry
 tasks
 taste
@@ -3093,6 +3093,7 @@ vests
 vexed
 vexes
 vials
+vibex
 vices
 video
 views
