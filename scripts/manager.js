@@ -19,10 +19,10 @@ class Manager {
     /**
      * Manages the bots running, so each bot can just contain logic.
      * @param {Object} props        | Contains game-related properties:
-     * @param {Number} mode             | which bot to pick. 0 = FRNG, 1 = PRNG, 2 = ELIM, 3 = CLIQ
-     * @param {Number} maxGuesses       | Maximum number of guesses
-     * @param {function} rate           | Game's rating function. 0 = absent. 1 = present. 2 = correct.
-     * @param {boolean} DEBUG           | used for output debugging.
+     * @param {Number} mode         | which bot to pick. 0 = FRNG, 1 = PRNG, 2 = ELIM, 3 = CLIQ
+     * @param {Number} maxGuesses   | Maximum number of guesses
+     * @param {Rate} rate           | Rate class, for rating guesses
+     * @param {boolean} DEBUG       | used for output debugging.
      * @param {Object} botprops     | Contains props destined for the bot.
      */
     constructor(props, botprops) {
@@ -32,8 +32,10 @@ class Manager {
         this.rate = props.rate;
         this.DEBUG = props.DEBUG;
 
-        if (this.DEBUG) { console.log (props); }
-        console.log(2 == this.MODE.ELIM);
+        if (this.DEBUG) {
+            console.log ("Props:", props);
+            console.log(2 == this.MODE.ELIM);
+        }
 
         // save bot properties
         this.botprops = botprops;
@@ -53,7 +55,7 @@ class Manager {
      */
     initBot(mode) {
         switch (mode) {
-            case this.MODE.PRNG:    // TODO: implement PRNG bot
+            case this.MODE.PRNG:
                 this.bot = new PRNG(this.botprops);
                 break;
             case this.MODE.ELIM:
@@ -62,7 +64,7 @@ class Manager {
             case this.MODE.CLIQ:
                 this.bot = new Clique(this.botprops);
                 break;
-            default:                // TODO: implement FRNG bot
+            default:
                 this.bot = new FRNG(this.botprops);
                 break;
         }
@@ -90,7 +92,7 @@ class Manager {
             this.bot.log(guess, "Guess:");
 
             // step 3: get rating
-            var rating = this.rate(guess);
+            var rating = this.rate.rateGuess(guess);
             this.ratings.push(rating);
             this.bot.log(rating, 'Rating:');
 
@@ -109,5 +111,22 @@ class Manager {
         // now, there are two possibilities: bot was correct, or bot exhausted guesses.
         // either way, game is over
         return;
+    }
+
+    reset(new_list = null) {
+        // reset bot-specific values
+        this.ratings = [];
+
+        // reset bot
+        if (new_list) {
+            this.bot.setWordList(new_list);
+        } else {
+            this.bot.reset();
+        }
+
+        // then, Play a new game
+        this.PlayGame();
+
+        // check state
     }
 }

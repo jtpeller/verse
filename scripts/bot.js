@@ -20,6 +20,7 @@ class Bot {
     constructor(props) {
         // extract class properties
         this.wordList = props.wordList;
+        this.original = structuredClone(props.wordList);
         this.wordCount = props.wordList.length;
         this.length = props.length;
         this.maxGuesses = props.guesses;
@@ -31,10 +32,14 @@ class Bot {
         this.prob = [];         // letter counts
         this.scores = [];       // score based on how many words will be eliminated
         this.guesses = [];      // array of guesses. Array<String>
-        this.ratings = [];      // array of ratings. Array<Array[int]>
         this.correct = false;   // whether the correct word has been found
         
         this.regex = Array(this.length).fill(`[ABCDEFGHIJKLMNOPQRSTUVWXYZ]+`);
+    }
+
+    /** precalculate is intended to be overridden by subclasses */
+    precalculate() {
+        return;
     }
 
     addGuess(guess) {
@@ -52,6 +57,43 @@ class Bot {
         if (this.DEBUG) {
             console.log(name, JSON.parse(JSON.stringify(value)));
         }
+    }
+
+    /**
+     * reset() -- sets the bot back to initial state
+     */
+    reset() {
+        // ensure word list is a clean copy.
+        this.wordList = structuredClone(this.original);
+        if (this.DEBUG) {
+            this.log(this.wordList, "Word List:");
+            this.log(this.original, "Original:");
+        }
+        
+        // reset wordCount and word length from original list.
+        this.wordCount = this.wordList.length;
+        this.length = this.wordList[0].length;
+
+        // reset bot state variables
+        this.nGuesses = 0;      // number of guesses made    
+        this.prob = [];         // letter counts
+        this.scores = [];       // score based on how many words will be eliminated
+        this.guesses = [];      // array of guesses. Array<String>
+        this.correct = false;   // whether the correct word has been found
+
+        // other parameters need not change upon reset.
+        this.regex = Array(this.length).fill(`[ABCDEFGHIJKLMNOPQRSTUVWXYZ]+`);
+    }
+
+    /**
+     * setWordList() -- as needed, tell bot there's a new list
+     */
+    setWordList(new_list) {
+        // save list
+        this.original = structuredClone(new_list);
+
+        // reset bot
+        this.reset();
     }
 
     /**
@@ -151,5 +193,15 @@ class Bot {
 
         this.wordList = structuredClone(temp);
         this.wordCount = this.wordList.length;
+    }
+
+    /**
+     * rng() generates a random number between 0 and max.
+     * @param {Number} max      what to select (e.g., an id: "#element-id" or a class ".element-class")
+     * 
+     * @returns {Number}        randomly generated value in [0, max)
+     */
+    rng(max) {
+        return Math.floor(Math.random() * max);
     }
 }

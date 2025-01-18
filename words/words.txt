@@ -4580,6 +4580,7 @@ benders
 bending
 Bendix
 bends
+bendy
 beneath
 Benedict
 Benedictine
@@ -10548,6 +10549,7 @@ coworker
 cows
 cowslip
 cowslips
+coy
 coyote
 coyotes
 coypu
@@ -11015,7 +11017,6 @@ Cummins
 cumulative
 cumulatively
 Cunard
-cunnilingus
 cunning
 Cunningham
 cunningly
@@ -13468,6 +13469,7 @@ donnybrook
 donor
 Donovan
 dons
+donut
 doodle
 Dooley
 Doolittle
@@ -24611,6 +24613,7 @@ loft
 loftiness
 lofts
 lofty
+log
 Logan
 logarithm
 logarithmic
@@ -27124,9 +27127,9 @@ mugs
 Muhammad
 Muir
 Mukden
-mulatto
 mulberries
 mulberry
+mulch
 mule
 mules
 mull
@@ -29763,6 +29766,7 @@ pave
 paved
 pavement
 pavements
+paver
 paves
 pavilion
 pavilions
@@ -31135,9 +31139,8 @@ pores
 poring
 pork
 porker
-pornographer
-pornographic
-pornography
+porks
+porky
 porous
 porpoise
 porridge
@@ -34434,6 +34437,7 @@ requester
 requesters
 requesting
 requests
+requiem
 require
 required
 requirement
@@ -40936,6 +40940,7 @@ taster
 tasters
 tastes
 tasting
+tasty
 Tate
 tatter
 tattered

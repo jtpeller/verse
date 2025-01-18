@@ -111,6 +111,7 @@
 
 .helper-grid {
     width: fit-content;
+    margin: auto;           /* center */
 }
 
 .highlighted {
@@ -118,7 +119,7 @@
     border-radius: 5px;
 }
 
-.modal-header-1 {
+.modal-h1 {
     font-size: calc(var(--master-font-size) * var(--subtitle-factor));
     text-align: center;
     border-bottom: 1px solid var(--border-color);
@@ -126,7 +127,7 @@
     margin: 2px 0;
 }
 
-.modal-header-2 {
+.modal-h2 {
     font-size: calc(var(--master-font-size) * var(--subtitle-factor) * 0.75);
     margin: 10px 0;
 }
@@ -181,7 +182,8 @@
 }
 
 .stat-label {
-    font-size: calc(var(--master-font-size) * var(--key-factor));
+    font-size: calc(var(--master-font-size) * var(--stat-label-factor));
+    color: var(--description-text-color);
 }
 
 .subtitle {

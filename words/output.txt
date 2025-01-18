@@ -3923,6 +3923,7 @@ bendable
 benders
 bending
 bends
+bendy
 beneath
 benediction
 benedictions
@@ -9054,6 +9055,7 @@ coworker
 cows
 cowslip
 cowslips
+coy
 coyote
 coyotes
 coypu
@@ -9477,7 +9479,6 @@ culturing
 cumbersome
 cumulative
 cumulatively
-cunnilingus
 cunning
 cunningly
 cup
@@ -11698,6 +11699,7 @@ donkeys
 donnybrook
 donor
 dons
+donut
 doodle
 doom
 doomed
@@ -22714,9 +22716,9 @@ muffs
 mug
 mugging
 mugs
-mulatto
 mulberries
 mulberry
+mulch
 mule
 mules
 mull
@@ -24909,6 +24911,7 @@ pave
 paved
 pavement
 pavements
+paver
 paves
 pavilion
 pavilions
@@ -26101,9 +26104,8 @@ pores
 poring
 pork
 porker
-pornographer
-pornographic
-pornography
+porks
+porky
 porous
 porpoise
 porridge
@@ -29195,6 +29197,7 @@ requester
 requesters
 requesting
 requests
+requiem
 require
 required
 requirement
@@ -34883,6 +34886,7 @@ taster
 tasters
 tastes
 tasting
+tasty
 tatter
 tattered
 tattoo

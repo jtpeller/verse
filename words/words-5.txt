@@ -283,6 +283,7 @@ below
 belts
 bench
 bends
+bendy
 beret
 berne
 berry
@@ -842,6 +843,7 @@ dolly
 domed
 domes
 donor
+donut
 dooms
 doors
 doped
@@ -1868,6 +1870,7 @@ mower
 mucus
 muddy
 muffs
+mulch
 mules
 multi
 mummy
@@ -2037,6 +2040,7 @@ patio
 patty
 pause
 paved
+paver
 paves
 pawns
 payed
@@ -2151,6 +2155,8 @@ poppy
 porch
 pored
 pores
+porks
+porky
 ports
 posed
 poser
@@ -2875,6 +2881,7 @@ tarps
 tarry
 tasks
 taste
+tasty
 taunt
 tawny
 taxed

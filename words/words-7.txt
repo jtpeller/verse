@@ -3538,7 +3538,6 @@ muffled
 muffler
 muffles
 mugging
-mulatto
 mumbled
 mumbler
 mumbles
@@ -4513,6 +4512,7 @@ repulse
 reputed
 reputes
 request
+requiem
 require
 reroute
 rescind

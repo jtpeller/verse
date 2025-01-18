@@ -53,4 +53,8 @@ class Clique extends Bot {
     update() {
         // 
     }
+
+    reset() {
+        
+    }
 }

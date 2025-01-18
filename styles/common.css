@@ -5,6 +5,7 @@
     --status-factor: 0.4;
     --square-factor: 0.6;
     --key-factor: 0.4;
+    --stat-label-factor: 0.3;
     --btn-factor: 0.6;
 
     --master-padding-size: 5px;
@@ -29,6 +30,8 @@
     --transition-dur: 150ms;
 
     --system-ui: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+    touch-action: manipulation;     /* disable double-tap-to-zoom for better keyboard UX */
 }
 
 body {
@@ -54,22 +57,19 @@ body {
 }
 
 .btn-item {
-    display: flex;
-    position: relative;
-    text-align: center !important;
     border-radius: 0px;
     background-color: var(--square-color);
     border: 2px solid var(--border-color) !important;
 
-    height: 5rem;
-    width: 75%;
+    padding: 1.5rem;
+    width: 100%;
     margin: auto;
     margin-bottom: 2rem;
 
     font-size: calc(var(--master-font-size) * var(--subtitle-factor));
 
-    transition: background-color var(--transition-dur) ease,
-                font-size var(--transition-dur) ease;
+    transition: background-color var(--transition-dur) ease-in-out,
+                transform var(--transition-dur) ease-in-out;
 }
 
 /* this isn't pretty but it gets the job done */
@@ -89,20 +89,8 @@ body {
     background-color: var(--toast-color);
 }
 
-.btn-item:hover>.btn-link {
+.btn-item:hover {
     transform: scale(1.1);
-}
-
-.btn-link {
-    font-size: 1.4rem;
-    margin: auto;
-    text-decoration: none;
-    font-weight: bold;
-    color: var(--text-color);
-
-    transform: scale(1);
-
-    transition: transform var(--transition-dur) ease-in-out;
 }
 
 .btn-link:hover {

@@ -70,6 +70,18 @@ class Eliminator extends Bot {
         return guess;
     }
 
+    /**
+     * reset() -- calls super, but also resets its own attributes
+     */
+    reset() {
+        // call parent to reset bot functions
+        super.reset();
+
+        // reset class-specific attributes
+        this.flagged = [];          // array of letters marked "present"
+        this.FACTOR = 5;            // factor to weight flagged letters
+    }
+
     // =================================================================
     // Private helper functions
     // =================================================================

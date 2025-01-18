@@ -7,8 +7,8 @@
 'use strict';
 
 class Utils {
-    constructor(debug) {
-        this.DEBUG = debug | false;
+    constructor(debug = false) {
+        this.DEBUG = debug;
     }
 
     /**
@@ -30,6 +30,13 @@ class Utils {
      */
     create(elem, options={}) {
         return Object.assign(document.createElement(elem), options)
+    }
+
+    /**
+     * create_UUID() -- generate a cryptographic UUID
+     */
+    create_UUID() {
+        return window.crypto.randomUUID();
     }
 
     log(value, name="") {
