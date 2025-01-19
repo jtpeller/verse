@@ -13,6 +13,7 @@ class Keyboard {
         this.element = document.querySelector(loc);
         this.classes = classes;
         this.util = new Utils();
+        this.enabled = true;
 
         // build the keyboard
         this.#build();
@@ -56,6 +57,8 @@ class Keyboard {
                         document.dispatchEvent(new KeyboardEvent(
                             'keydown', { 'key': val }
                         ))
+
+                        console.log("keypress: ", val);
                     }
                 }).bind(this);
 

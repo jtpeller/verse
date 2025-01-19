@@ -12620,8 +12620,6 @@ digs
 dihedral
 Dijkstra
 Dijon
-dike
-dikes
 dilapidate
 dilatation
 dilate
@@ -12629,7 +12627,6 @@ dilated
 dilates
 dilating
 dilation
-dildo
 dilemma
 dilemmas
 diligence
@@ -17940,6 +17937,7 @@ gambol
 game
 gamed
 gamely
+gamer
 gameness
 games
 gaming
@@ -33254,6 +33252,7 @@ realness
 reals
 realtor
 ream
+reams
 reanalyze
 reanalyzes
 reanalyzing

@@ -10901,8 +10901,6 @@ digressions
 digressive
 digs
 dihedral
-dike
-dikes
 dilapidate
 dilatation
 dilate
@@ -10910,7 +10908,6 @@ dilated
 dilates
 dilating
 dilation
-dildo
 dilemma
 dilemmas
 diligence
@@ -15566,6 +15563,7 @@ gambol
 game
 gamed
 gamely
+gamer
 gameness
 games
 gaming
@@ -20868,6 +20866,7 @@ loft
 loftiness
 lofts
 lofty
+log
 logarithm
 logarithmic
 logarithmically
@@ -28048,6 +28047,7 @@ realness
 reals
 realtor
 ream
+reams
 reanalyze
 reanalyzes
 reanalyzing
