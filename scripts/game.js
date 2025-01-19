@@ -13,6 +13,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // CONSTANTS AND GLOBALS
     const MODAL_LOC = '#modal';
     const DEBUG = false;
+
+    // TODO: Implement hints.
+    if (window.location.search.includes("help=")) {
+        let hints = document.querySelector("#hints");
+        hints.classList.remove("invisible");
+    }
     
     // initialize Game State obj
     let gameState = new GameState({
