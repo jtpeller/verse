@@ -32184,8 +32184,6 @@ prosperous
 prospers
 prostate
 prosthetic
-prostitute
-prostitution
 prostrate
 prostration
 protagonist
@@ -44543,8 +44541,6 @@ Wellsville
 Welmers
 welsh
 Welton
-wench
-wenches
 Wendell
 Wendy
 went
@@ -44738,8 +44734,6 @@ whoop
 whooped
 whooping
 whoops
-whore
-whores
 whorl
 whorls
 whose

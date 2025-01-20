@@ -41,7 +41,7 @@ class GameState {
         this.gameWords = [];        // points to one of the arrays of allWords for ease of access.
 
         // major game objects
-        this.grid = new Grid(this.guessCount, this.wordLength, this.CLASSES, this.GRID_LOC);
+        this.grid = Grid.GameGrid(this.guessCount, this.wordLength, this.CLASSES, this.GRID_LOC);
         this.mgr = null;            // must be initialized later
 
         // class-managed attributes

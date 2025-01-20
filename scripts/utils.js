@@ -63,4 +63,24 @@ class Utils {
     select(val, origin=document) {
         return origin.querySelector(val);
     }
+
+    /**
+     * promiseWords() -- reads the words in, then callback provided by the caller.
+     */
+    promiseWords(callback) {
+        // to read in all the files without later issues, use promises
+        let promises = [];
+        for (let i = 3; i <= 12; i++) {
+            promises.push(fetch(`words/words-${i}.txt`))
+        }
+
+        // promise the data
+        Promise.all(promises).then(function (responses) {
+            return Promise.all(responses.map(function (response) {
+                return response.text();
+            }));
+        }).then((data) => {
+            callback(data);
+        });
+    }
 }

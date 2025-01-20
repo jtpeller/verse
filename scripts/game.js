@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // CONSTANTS AND GLOBALS
     const MODAL_LOC = '#modal';
     const DEBUG = false;
+    const util = new Utils(DEBUG);
 
     // TODO: Implement hints.
     if (window.location.search.includes("help=")) {
@@ -40,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let modal = new Modal(MODAL_LOC, gameState);
 
     // initialize the words (which starts the game)
-    initWords();
+    util.promiseWords(wordsCallback);
 
     // =================================================================
     // =
@@ -48,34 +49,18 @@ document.addEventListener('DOMContentLoaded', function () {
     // =
     // =================================================================
 
-    /**
-     * initWords() - initialize the word list
-     */
-    function initWords() {
-        // to read in all the files without later issues, use promises
-        let promises = [];
-        for (let i = 3; i <= 12; i++) {
-            promises.push(fetch(`words/words-${i}.txt`))
-        }
-
-        // promise the data
-        Promise.all(promises).then(function (responses) {
-            return Promise.all(responses.map(function (response) {
-                return response.text();
-            }));
-        }).then(function (data) {       // handle the data
-            for (let i = 0; i < data.length; i++) {
-                // handle line endings because of course everything has to be complicated
-                if (data[i].includes("\r\n")) {
-                    gameState.allWords.push(data[i].toUpperCase().split("\r\n"));
-                } else {
-                    gameState.allWords.push(data[i].toUpperCase().split("\n"));
-                }
+    function wordsCallback(data) {       // handle the data
+        for (let i = 0; i < data.length; i++) {
+            // handle line endings because of course everything has to be complicated
+            if (data[i].includes("\r\n")) {
+                gameState.allWords.push(data[i].toUpperCase().split("\r\n"));
+            } else {
+                gameState.allWords.push(data[i].toUpperCase().split("\n"));
             }
-            
-            // call startGame now
-            startGame();
-        })
+        }
+        
+        // call startGame now
+        startGame();
     }
 
     /**

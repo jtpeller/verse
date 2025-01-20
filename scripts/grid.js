@@ -11,22 +11,37 @@ class Grid {
      * Grid handles all logic & things related to the game grid.
      * Handles formatting, setting grid values, etc.
      */
-    constructor(rowCount, colCount, classes, loc = '#grid') {
+    constructor(rows, cols, classes, loc = '#grid') {
+        this.util = new Utils();
+        this.rows = rows;
+        this.cols = cols;
+        this.classes = classes;
+
+        // add logic for custom grid use
+        if (!rows && !cols && !loc) {
+            // caller requests a ManualGrid instance.
+            return;
+        }
+
         // extract attributes from provided info
         this.grid = document.querySelector(loc);
         if (!this.grid) {
             throw new Error(`Grid location does not exist.`)
         }
-        this.rows = rowCount;
-        this.cols = colCount;
-        this.classes = classes;
        
         // attributes
         this.activeRow = 0;     // which row is being worked on.
-        this.util = new Utils();
         
         // build immediately upon instantiation.
         this.buildGrid();
+    }
+
+    static GameGrid(rows, cols, classes, loc = '#grid') {
+        return new Grid(rows, cols, classes, loc);
+    }
+
+    static ManualGrid(classes) {
+        return new Grid(null, null, classes, null);
     }
 
     /**
@@ -44,9 +59,9 @@ class Grid {
     
     /**
      * createRow() -- creates a game row thingy
-     * @param {int} i | which row this is
-     * @param {string} [prefix='']  | prefix for row ID
-     * @param {string} [value='']   | value for the row to take on (i.e., a user's/bot's guess)
+     * @param {int} i               // which row this is
+     * @param {string} [prefix='']  // prefix for row ID
+     * @param {string} [value='']   // value for the row to take on (i.e., a user's/bot's guess)
      */
     createRow(i, prefix = '', rating = [], value = '') {
         var row = this.util.create('div', { 

@@ -24,13 +24,6 @@
     margin-bottom: 15px;
 }
 
-.game-board {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-}
-
 .game-btn {
     border: none;
     border-radius: 100px;
@@ -50,45 +43,6 @@
 
     align-items: center;
     justify-content: center;
-}
-
-.game-cell {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-
-    width: calc(var(--master-font-size) * 2 * var(--square-factor));
-    height: calc(var(--master-font-size) * 2 * var(--square-factor));
-    margin: 5px 0;
-
-    text-align: center;
-    text-transform: uppercase;
-
-    padding: 5px;
-
-    border: 2px solid var(--border-color);
-    background-color: var(--square-color);
-    color: var(--text-color);
-    
-    font-size: calc(var(--master-font-size) * var(--square-factor));
-
-    pointer-events: none;
-
-    transition: background-color 250ms ease;
-}
-
-.game-grid {
-    padding: 5px;
-    box-sizing: border-box;
-    width: fit-content;
-    margin-right: auto !important;
-    margin-left: auto !important;
-}
-
-.game-row {
-    display: grid;
-    grid-template-columns: repeat(5, 0fr);
-    grid-gap: 5px;
-    padding: 0 5px;
 }
 
 .game-status {
@@ -137,18 +91,6 @@
     font-weight: lighter;
     
     color: var(--description-text-color);
-}
-
-.correct {
-    background-color: var(--correct-color) !important;
-}
-
-.present {
-    background-color: var(--present-color);
-}
-
-.incorrect {
-    background-color: var(--incorrect-color);
 }
 
 .settings-block {

@@ -116,6 +116,18 @@ body {
     color: var(--text-color);
 }
 
+.correct {
+    background-color: var(--correct-color) !important;
+}
+
+.present {
+    background-color: var(--present-color) !important;
+}
+
+.incorrect {
+    background-color: var(--incorrect-color) !important;
+}
+
 /* QUERIES */
 /* LG */
 @media only screen and (min-width: 992px) {

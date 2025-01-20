@@ -11,11 +11,13 @@
     <!-- CSS & Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel='stylesheet' href='styles/common.css'>
+    <link rel='stylesheet' href='styles/grid.css'>
     <link rel='stylesheet' href='styles/solver.css'>
 
     <!-- scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="scripts/utils.js"></script>
+    <script src="scripts/grid.js"></script>
     <script src="scripts/solver.js"></script>
 </head>
 
@@ -29,7 +31,42 @@
             </span>
         </div>
         <div>
-            <h2 class="text-center">Under Construction</h2>
+            <h2 class="text-center fw-bold fst-italic">Under Construction</h2>
+            <p class="text-center fst-italic w-50 m-auto">
+                In a pinch? On the last guess and you desperately need to preserve your 
+                streak? Fear not! Enter the correct, present, and incorrect letters below!
+                The word list will update to narrow down your guess!
+            </p>
+            <div id="grid-div">
+                <div>
+                    <h2 class="text-center">Correct</h2>
+                    <div class="center">
+                        <div class="game-grid" id="correct"></div>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-center">Present</h2>
+                    <div class="center">
+                        <div class="game-grid" id="present"></div>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-center">Incorrect</h2>
+                    <div class="center">
+                        <div class="game-grid" id="incorrect"></div>
+                    </div>
+                </div>
+                
+            </div>
+            <hr class="w-75 mx-auto">
+            <div id="word-div">
+                <h2 class="text-center">Word List</h2>
+                <p class="text-center fst-italic w-50 m-auto mb-3">
+                    Below is the list of possible words based on your input.
+                    This list will update live.
+                </p>
+                <div class="row text-center w-75 m-auto" id="words"></div>
+            </div>
         </div>
     </div>
 </body>
