@@ -8,7 +8,7 @@
 
 class GameState {
     #word;      // word to guess. private for improved control
-    #uuid;      // authentication for rate.
+    #uuid;      // "authentication" for rate.
 
     constructor(props) {
         // constants pulled from props:
@@ -21,7 +21,6 @@ class GameState {
         // class-specified constants
         this.MIN_LENGTH = 3;
         this.MAX_LENGTH = 12;
-        this.util = new Utils(this.DEBUG);
 
         // settings
         this.wordLength = 5;
@@ -41,7 +40,8 @@ class GameState {
         this.gameWords = [];        // points to one of the arrays of allWords for ease of access.
 
         // major game objects
-        this.grid = Grid.GameGrid(this.guessCount, this.wordLength, this.CLASSES, this.GRID_LOC);
+        this.grid = new Grid();
+        this.grid.buildGrid(this.guessCount, this.wordLength, this.CLASSES, this.GRID_LOC);
         this.mgr = null;            // must be initialized later
 
         // class-managed attributes
@@ -109,10 +109,8 @@ class GameState {
      *  otherwise, do not decrement.
      */
     decrementLetter() {
-        // check boundaries (i.e., this.letter is 0)
-        if (this.letter <= 0) {
-            // do nothing; ignore bksp/delete if guess is empty
-        } else {
+        // check boundaries (i.e., this.letter is <= 0, do nothing)
+        if (this.letter > 0) {
             // move letter to previous cell
             this.letter--;
             this.grid.setCell(this.nGuesses, this.letter, '');
@@ -152,8 +150,8 @@ class GameState {
             this.mgr.reset(this.gameWords);
         } else {
             if (this.DEBUG) {
-                this.util.log(this.mgr, "Manager is:");
-                this.util.log(null, "Instantiating Manager")
+                Utils.log(this.mgr, "Manager is:");
+                Utils.log(null, "Instantiating Manager")
             }
             this.initManager();
         }
@@ -185,7 +183,7 @@ class GameState {
 
         // debug msg
         if (this.DEBUG) {
-            this.util.log(this.userStats.getStats().correct, "Correct:");
+            Utils.log(this.userStats.getStats().correct, "Correct:");
         }
     }
 
@@ -198,7 +196,7 @@ class GameState {
             // update grid
             this.grid.setRowsCols(this.guessCount, this.wordLength);
         } else if (this.DEBUG) {
-            this.util.log(this.guessCount, "Guess Count fails value assertion:")
+            Utils.log(this.guessCount, "Guess Count fails value assertion:")
         }
     }
     
@@ -214,7 +212,7 @@ class GameState {
             // call grid to update.
             this.grid.setRowsCols(this.guessCount, this.wordLength);
         } else if (this.DEBUG) {
-            this.util.log(this.wordLength, "Word Length fails value assertion:")
+            Utils.log(this.wordLength, "Word Length fails value assertion:")
         }
     }
 
@@ -315,7 +313,7 @@ class GameState {
         if (this.rate) {
             this.rate.setWord(this.#word, this.#uuid);
         } else {
-            this.#uuid = this.util.create_UUID()
+            this.#uuid = Utils.create_UUID()
             this.rate = new Rate(this.#word, this.#uuid);
         }
     }
@@ -368,10 +366,10 @@ class GameState {
     // picks the verse word
     #selectWord() {
         // interesting words to test: SLAYS, CORNY
-        this.util.log(this.gameWords, "GAMEWORDS");
-        this.#word = this.gameWords[this.util.rng(this.gameWords.length)].toUpperCase();
+        Utils.log(this.gameWords, "GAMEWORDS");
+        this.#word = this.gameWords[Utils.rng(this.gameWords.length)].toUpperCase();
         this.#createRate();
-        this.util.log(this.#word, "SECRET");
+        Utils.log(this.#word, "SECRET");
     }
 
     // enables game to set whether the user played (i.e. finished) the game.
@@ -385,7 +383,7 @@ class GameState {
         this.userStats.addPlay();
         this.finished = true;
         if (this.DEBUG) {
-            this.util.log(this.userStats.getStats().played, "Played:");
+            Utils.log(this.userStats.getStats().played, "Played:");
         }
 
         // game is finished, so we need to disable keyboard

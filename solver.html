@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en-us" data-bs-theme="dark">
+<html lang="en-us" dark-bs-theme="dark">
 
 <head>
     <meta charset="utf-8" />
@@ -11,61 +11,97 @@
     <!-- CSS & Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel='stylesheet' href='styles/common.css'>
+    <link rel='stylesheet' href='styles/keyboard.css'>
+    <link rel='stylesheet' href='styles/modal.css'>
     <link rel='stylesheet' href='styles/grid.css'>
     <link rel='stylesheet' href='styles/solver.css'>
 
     <!-- scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="scripts/utils.js"></script>
-    <script src="scripts/grid.js"></script>
-    <script src="scripts/solver.js"></script>
+    <script src="scripts/utils.js" type="text/javascript"></script>
+    <script src="scripts/bot.js" type="text/javascript"></script>
+    <script src="scripts/keyboard.js" type="text/javascript"></script>
+    <script src="scripts/modal.js" type="text/javascript"></script>
+    <script src="scripts/grid.js" type="text/javascript"></script>
+    <script src="scripts/solver.js" type="text/javascript"></script>
 </head>
 
 <body>
-    <div id="content">
-        <div class="banner">
-            <span class="title-box">
-                <h1 class="title mx-auto">
-                    <a class="link" href="index.html">Verse!</a>
-                </h1>
-            </span>
+    <div class="container">
+        <div class="header">
+            <h1 class="title mx-auto">
+                <a class="link" href="index.html">Verse!</a>
+            </h1>
         </div>
-        <div>
-            <h2 class="text-center fw-bold fst-italic">Under Construction</h2>
-            <p class="text-center fst-italic w-50 m-auto">
+        <div id="solver">
+            <h2 class="text-center">Under Construction</h2>
+            <p class="text-center fst-italic mw-75 mx-auto">Currently, I need to fix: Help, Restart, and Settings menus.</p>
+            <p class="text-center fst-italic mw-75 mx-auto">
                 In a pinch? On the last guess and you desperately need to preserve your 
-                streak? Fear not! Enter the correct, present, and incorrect letters below!
-                The word list will update to narrow down your guess!
+                streak? Fear not! Enter your guesses in the game grid below. Mark cells as
+                incorrect, present, or correct by clicking on them.
+                The word list at the bottom will update to narrow down your guess!
             </p>
-            <div id="grid-div">
-                <div>
-                    <h2 class="text-center">Correct</h2>
-                    <div class="center">
-                        <div class="game-grid" id="correct"></div>
-                    </div>
+            <div class="text-center mx-auto">
+                <div class="game-btns" id="buttons">
+                    <span data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Help" id="Help">
+                        <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Help">
+                            <img class="game-svg" src="resources/help.svg" alt="Help">
+                        </a>
+                    </span>
+    
+                    <span data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Restart" id="Restart">
+                        <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Restart">
+                            <img class="game-svg" src="resources/restart.svg" alt="Restart">
+                        </a>
+                    </span>
+    
+                    <span data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Settings" id="Settings">
+                        <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            data-bs-title="Settings">
+                            <img class="game-svg" src="resources/settings.svg" alt="Settings">
+                        </a>
+                    </span>
                 </div>
-                <div>
-                    <h2 class="text-center">Present</h2>
-                    <div class="center">
-                        <div class="game-grid" id="present"></div>
-                    </div>
+    
+                <div id="grid-div" class="row mx-auto">
+                    <div id="grid" class="game-grid"></div>
                 </div>
-                <div>
-                    <h2 class="text-center">Incorrect</h2>
-                    <div class="center">
-                        <div class="game-grid" id="incorrect"></div>
-                    </div>
-                </div>
-                
+                <div id="keyboard" class="keyboard"></div>
             </div>
             <hr class="w-75 mx-auto">
             <div id="word-div">
                 <h2 class="text-center">Word List</h2>
-                <p class="text-center fst-italic w-50 m-auto mb-3">
-                    Below is the list of possible words based on your input.
-                    This list will update live.
+                <p class="text-center fst-italic mx-auto mb-4">
+                    Below is the list of possible words based on your input 
+                    <br>This list will update after you submit a rated guess!
+                    <br><b>Note: this list might not be the same as the game you're playing!</b>
                 </p>
-                <div class="row text-center w-75 m-auto" id="words"></div>
+                <div class="row text-center w-75 m-auto pb-5 mb-5" id="words"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Element -->
+    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content modal-dialog-dark">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modal-title"></h1>
+                    <button type="button" id="modal-close-btn" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-body">...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Element -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="toast-msg" class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body"></div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
         </div>
     </div>

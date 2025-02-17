@@ -1,0 +1,11 @@
+#grid {
+    pointer-events: none;   /* fix to pass through click event */
+}
+
+.grid-row {
+    pointer-events: none;   /* fix to pass through click event */
+}
+
+.game-cell {
+    pointer-events: auto;   /* fix to pass through click event */
+}

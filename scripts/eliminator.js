@@ -11,7 +11,6 @@ class Eliminator extends Bot {
         super(props);       // let parent do the work.
 
         // bot-specific logic fields
-        this.flagged = [];          // array of letters marked "present"
         this.FACTOR = 5;            // factor to weight flagged letters
     }
 

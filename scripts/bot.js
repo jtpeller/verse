@@ -35,6 +35,7 @@ class Bot {
         this.correct = false;   // whether the correct word has been found
         
         this.regex = Array(this.length).fill(`[ABCDEFGHIJKLMNOPQRSTUVWXYZ]+`);
+        this.flagged = [];      // array of letters marked "present"
     }
 
     /** precalculate is intended to be overridden by subclasses */
@@ -73,6 +74,7 @@ class Bot {
         // reset wordCount and word length from original list.
         this.wordCount = this.wordList.length;
         this.length = this.wordList[0].length;
+        this.flagged = [];          // array of letters marked "present"
 
         // reset bot state variables
         this.nGuesses = 0;      // number of guesses made    

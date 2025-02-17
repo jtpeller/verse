@@ -18,7 +18,7 @@ class Utils {
      * @param {object} options      properties to assign to elem
      * @return {Element}
      */
-    append(appendee, elem, options={}) {
+    static append(appendee, elem, options={}) {
         return appendee.appendChild(this.create(elem, options));
     }
     
@@ -28,18 +28,18 @@ class Utils {
      * @param {object} options  what properties to assign to it
      * @returns {Element}
      */
-    create(elem, options={}) {
+    static create(elem, options={}) {
         return Object.assign(document.createElement(elem), options)
     }
 
     /**
      * create_UUID() -- generate a cryptographic UUID
      */
-    create_UUID() {
+    static create_UUID() {
         return window.crypto.randomUUID();
     }
 
-    log(value, name="") {
+    static log(value, name="") {
         if (this.DEBUG) {
             console.log(name, JSON.parse(JSON.stringify(value)));
         }
@@ -50,7 +50,7 @@ class Utils {
      * @param {Number} max      what to select (e.g., an id: "#element-id" or a class ".element-class")
      * @returns {Number}        randomly generated value in [0, max]
      */
-    rng(max) {
+    static rng(max) {
         return Math.floor(Math.random() * max);
     }
 
@@ -60,14 +60,14 @@ class Utils {
      * @param {Element} origin  source Element to select from (default: document)
      * @returns {Element}
      */
-    select(val, origin=document) {
+    static select(val, origin=document) {
         return origin.querySelector(val);
     }
 
     /**
      * promiseWords() -- reads the words in, then callback provided by the caller.
      */
-    promiseWords(callback) {
+    static promiseWords(callback) {
         // to read in all the files without later issues, use promises
         let promises = [];
         for (let i = 3; i <= 12; i++) {

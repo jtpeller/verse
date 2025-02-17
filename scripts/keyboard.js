@@ -12,7 +12,6 @@ class Keyboard {
         // define attributes
         this.element = document.querySelector(loc);
         this.classes = classes;
-        this.util = new Utils();
         this.enabled = true;
 
         // build the keyboard
@@ -26,7 +25,7 @@ class Keyboard {
         // for each row
         for (const val of vals) {
             // create the row
-            var row_elem = this.util.create('div', { className: 'keyboard-row' })
+            var row_elem = Utils.create('div', { className: 'keyboard-row' })
 
             // for each char in val
             for (let i = 0; i < val.length; i++) {
@@ -42,7 +41,7 @@ class Keyboard {
                     key = "Backspace";
                 }
 
-                var button = this.util.create('button', {
+                var button = Utils.create('button', {
                     className: 'key',
                     textContent: txt.toUpperCase(),
                     id: `key-${txt.toUpperCase()}`,
@@ -57,8 +56,6 @@ class Keyboard {
                         document.dispatchEvent(new KeyboardEvent(
                             'keydown', { 'key': val }
                         ))
-
-                        console.log("keypress: ", val);
                     }
                 }).bind(this);
 

@@ -6,50 +6,41 @@
 // =================================================================
 'use strict';
 
+/**
+ * Grid handles all logic & things related to the game grid.
+ * Handles formatting, setting grid values, etc.
+ */
 class Grid {
+    // grid needs to know which classes will be used.
+    constructor(classes) {
+        this.classes = classes;
+    }
+
     /**
-     * Grid handles all logic & things related to the game grid.
-     * Handles formatting, setting grid values, etc.
+     * buildGrid() -- responsible for building the grid and initializing values
+     *  Build Grid would be used when caller wants a simple grid created for them.
+     *  Grid attributes will be created and managed by the grid
+     *  
+     *  If caller wants to manage their own grid, they can utilize the creator
+     *      functions: createRow, createCell. They can manage rows / cols counts
+     *      if desired, but it wouldn't be necessary there.
      */
-    constructor(rows, cols, classes, loc = '#grid') {
-        this.util = new Utils();
+    buildGrid(rows, cols, classes, loc = '#grid') {
         this.rows = rows;
         this.cols = cols;
         this.classes = classes;
-
-        // add logic for custom grid use
-        if (!rows && !cols && !loc) {
-            // caller requests a ManualGrid instance.
-            return;
-        }
 
         // extract attributes from provided info
         this.grid = document.querySelector(loc);
         if (!this.grid) {
             throw new Error(`Grid location does not exist.`)
         }
+        
+        // grid must be clear
+        this.grid.innerHTML = '';       // clear grid.
        
         // attributes
         this.activeRow = 0;     // which row is being worked on.
-        
-        // build immediately upon instantiation.
-        this.buildGrid();
-    }
-
-    static GameGrid(rows, cols, classes, loc = '#grid') {
-        return new Grid(rows, cols, classes, loc);
-    }
-
-    static ManualGrid(classes) {
-        return new Grid(null, null, classes, null);
-    }
-
-    /**
-     * buildGrid() -- responsible for building the grid
-     */
-    buildGrid() {
-        // grid must be clear
-        this.grid.innerHTML = '';       // clear grid.
 
         // for row count:
         for (let i = 0; i < this.rows; i++) {
@@ -64,7 +55,7 @@ class Grid {
      * @param {string} [value='']   // value for the row to take on (i.e., a user's/bot's guess)
      */
     createRow(i, prefix = '', rating = [], value = '') {
-        var row = this.util.create('div', { 
+        var row = Utils.create('div', { 
             className: "game-row",
             style: `grid-template-columns: repeat(${this.cols}, 0fr);`,
             id: `${prefix}row-${i}` 
@@ -72,21 +63,27 @@ class Grid {
 
         // for the word length
         for (let j = 0; j < this.cols; j++) {
-            // for use when caller wants to define a rated row
-            var cellClass = 'game-cell';
-            if (rating != []) {
-                cellClass += ' ' + this.classes[rating[j]]
-            }
-
-            // create a cell per row
-            row.append(this.util.create('div', { 
-                className: cellClass,
-                id: `cell-${j}`,
-                textContent: value[j],
-            }));
+            row.append(this.createCell(j, rating[j], value[j]))
         }
 
         return row;
+    }
+
+    // creates a single cell, with provided value, rating, etc.
+    createCell(j, rating = -1, value = '') {
+        // for use when caller wants to define a rated row
+        var cellClass = 'game-cell';
+        if (rating != [] && rating >= 0 && rating <= 2) {
+            cellClass += ' ' + this.classes[rating]
+        }
+
+        let cell = Utils.create('div', { 
+            className: cellClass,
+            id: `cell-${j}`,
+            textContent: value,
+        })
+
+        return cell;
     }
 
     /** highlights the provided row, as indication of which guess we're on */
@@ -94,6 +91,8 @@ class Grid {
         if (rownum < 0 || rownum >= this.rows) {
             return;
         }
+
+        console.log(this.rows);
 
         // loop through all others and remove highlighted
         this.activeRow = rownum;
@@ -151,11 +150,11 @@ class Grid {
         if (rows >= 1 && cols >= 1) {
             this.rows = rows;
             this.cols = cols;
-            this.buildGrid();
+            this.buildGrid(this.rows, this.cols, this.classes, this.loc);
             this.highlightRow(0);   // highlight first row
         } else if (this.DEBUG) {
-            this.util.log(rows, "Rows:");
-            this.util.log(cols, "Cols:");
+            Utils.log(rows, "Rows:");
+            Utils.log(cols, "Cols:");
         }
     }
 

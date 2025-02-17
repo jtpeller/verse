@@ -1,5 +1,4 @@
 
-
 .game-board {
     display: flex;
     justify-content: center;
@@ -44,4 +43,9 @@
     grid-template-columns: repeat(5, 0fr);
     grid-gap: 5px;
     padding: 0 5px;
+}
+
+.highlighted {
+    border: 1px solid cyan;
+    border-radius: 5px;
 }

@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // CONSTANTS AND GLOBALS
     const MODAL_LOC = '#modal';
     const DEBUG = false;
-    const util = new Utils(DEBUG);
 
     // TODO: Implement hints.
     if (window.location.search.includes("help=")) {
@@ -41,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let modal = new Modal(MODAL_LOC, gameState);
 
     // initialize the words (which starts the game)
-    util.promiseWords(wordsCallback);
+    Utils.promiseWords(wordsCallback);
 
     // =================================================================
     // =
