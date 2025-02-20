@@ -868,6 +868,7 @@ lame
 lamp
 land
 lane
+lank
 laps
 lard
 lark

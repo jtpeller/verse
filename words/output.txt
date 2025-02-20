@@ -20167,6 +20167,8 @@ languish
 languished
 languishes
 languishing
+lank
+lanky
 lantern
 lanterns
 lap
@@ -27094,8 +27096,6 @@ prosperous
 prospers
 prostate
 prosthetic
-prostitute
-prostitution
 prostrate
 prostration
 protagonist
@@ -37996,8 +37996,6 @@ well
 welled
 welling
 welsh
-wench
-wenches
 went
 wept
 were
@@ -38145,8 +38143,6 @@ whoop
 whooped
 whooping
 whoops
-whore
-whores
 whorl
 whorls
 whose

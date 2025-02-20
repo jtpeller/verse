@@ -14,7 +14,6 @@ class Bot {
      * @param {int} wordCount           | wordList array length
      * @param {int} length              | word length
      * @param {int} maxGuesses          | maximum number of guesses
-     * @param {function} rate           | function from instantiator to rate a guess
      * @param {boolean} DEBUG           | used for output debugging.
      */
     constructor(props) {
@@ -24,7 +23,6 @@ class Bot {
         this.wordCount = props.wordList.length;
         this.length = props.length;
         this.maxGuesses = props.guesses;
-        this.rate = props.rateFunction;
         this.DEBUG = props.DEBUG | false;
 
         // create now, use later
@@ -54,7 +52,7 @@ class Bot {
     }
 
     // log value
-    log(value, name="") {
+    #log(value, name="") {
         if (this.DEBUG) {
             console.log(name, JSON.parse(JSON.stringify(value)));
         }
@@ -67,8 +65,8 @@ class Bot {
         // ensure word list is a clean copy.
         this.wordList = structuredClone(this.original);
         if (this.DEBUG) {
-            this.log(this.wordList, "Word List:");
-            this.log(this.original, "Original:");
+            this.#log(this.wordList, "Word List:");
+            this.#log(this.original, "Original:");
         }
         
         // reset wordCount and word length from original list.
@@ -148,7 +146,7 @@ class Bot {
         }
 
         if (this.DEBUG) {
-            this.log(this.regex, "Regex:");
+            this.#log(this.regex, "Regex:");
         }
     }
 
@@ -172,7 +170,7 @@ class Bot {
                 this.flagged.push(guess[i]);
             }
         }
-        this.log(this.flagged, "Flagged:");
+        this.#log(this.flagged, "Flagged:");
 
         // word will match this combined expression:
         var r = '';

@@ -41,6 +41,11 @@ body {
     min-height: 100%;
 }
 
+.bg-dark {
+    background-color: var(--bg-color) !important;
+    color: var(--text-color) !important;
+}
+
 .modal-dialog-dark {
     /* REDEFINE BOOTSTRAP VARS */
     --bs-modal-header-border-color: /*var(--border-color);*/ transparent;
@@ -49,6 +54,10 @@ body {
     background-color: var(--bg-color) !important;
     color: var(--text-color) !important;
     border-color: var(--border-color) !important;
+}
+
+.list-group .list-group-item {
+    border: none;
 }
 
 .btn-close {

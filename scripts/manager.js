@@ -32,10 +32,8 @@ class Manager {
         this.rate = props.rate;
         this.DEBUG = props.DEBUG;
 
-        if (this.DEBUG) {
-            console.log ("Props:", props);
-            console.log(2 == this.MODE.ELIM);
-        }
+        Utils.log(props, "Manager Props:")
+        Utils.log(botprops, "Manager Bot Props:")
 
         // save bot properties
         this.botprops = botprops;

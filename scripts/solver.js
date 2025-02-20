@@ -8,7 +8,7 @@
 
 // TODO: fix restart
 // TODO: fix settings
-// TODO: once a cell is marked complete + submit, it should stay that value/class to make things easier?
+// TODO: maybe once a cell is marked complete + submit, it should stay that value/class to make things easier?
 
 /**
  * event listener to populate the page.
@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let LEN = 5;            // default word length
     let curr_row = 0;       // active row
     let letter = 0;         // which letter of the word is active.
+    let help_html = '';
 
     // select elements
     let wdiv = document.querySelector(WID);
@@ -46,13 +47,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // modal for helpers
     let solverState = {
-        resetGameState: () => {
-            grid.resetGrid();
-            words = structuredClone(allWords[LEN-MIN])
-            addWords();
-        }
+        wordLength: LEN,
     }
-    let modal = new Modal('#modal');
+
+    let modal_funcs = [help, restart, settings];
+    let modal = new Modal('#modal', modal_funcs);
 
     // enable grid toggling
     initLetterGrid();
@@ -239,4 +238,213 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector('.toast-body').textContent = msg;   // update msg
         toast.show();       // show the toast
     }
+
+    // modal stuff
+
+    // builds the help modal
+    function help() {
+        //// we can speed this up with flags.
+        if (help_html != '') {
+            let body = Utils.create('div', {})
+            body.innerHTML = help_html;
+            return body;
+        }
+
+        // title 
+        const title = Utils.create('h1', {
+            className: 'modal-h1',
+            textContent: 'How To Use',
+        });
+
+        // overview
+        const text = "In a pinch? On the last guess and you desperately need to preserve your streak? Fear not! This solver can help!"
+        let header1 = Utils.create('h2', { classList: "modal-h2", textContent: "Overview" })
+        let p = Utils.create('p', { textContent: text })
+        
+        // details
+        let header2 = Utils.create('h2', { classList: "modal-h2", textContent: "Steps" })
+        let steps = [
+            "Type out your guess in the game grid below.",
+            "Mark cells as incorrect (once), present (twice), or correct (thrice) by clicking on them!",
+            "Submit your guess by pressing ENTER",
+            "The word list at the bottom will update to narrow down your guess!",
+        ]
+
+        // build the details OL
+        let ol = Utils.create('ol', {
+            classList: "list-group list-group-numbered"
+        })
+        for (let i = 0; i < steps.length; i++) {
+            var li = Utils.create('li', {
+                classList: "list-group-item bg-dark",
+                textContent: steps[i]
+            })
+            ol.append(li)
+        }
+
+        // append to body
+        let body = Utils.create('div', {})
+        body.append(title)
+        body.append(header1);
+        body.append(p);
+        body.append(header2);
+        body.append(ol);
+
+        help_html = body.innerHTML;
+
+        return body;
+    }
+
+    // builds the restart modal
+    function restart() {
+        let elems = [];
+
+        elems.push(Utils.create('h1', {
+            className: 'modal-h1',
+            textContent: 'Restart',
+        }));
+
+        // populate body:
+        // ... are you sure?
+        elems.push(Utils.create('h1', {
+            className: "modal-h2",
+            textContent: "Are you sure you want to restart? You'll keep your stats...",
+        }))
+
+        // ... confirm buttons
+        const div = Utils.create('div', {
+            className: 'text-end'
+        })
+
+        var cancel = Utils.create('button', {
+            className: "btn btn-secondary w-100 m-1",
+            innerText: "Cancel",
+            onclick: (e) => {
+                closeModal();
+            }
+        });
+
+        var restart = Utils.create('button', {
+            className: "btn btn-danger w-100 m-1",
+            innerText: "Restart",
+            onclick: ((e) => {
+                closeModal();
+                restartSolver();
+            })
+        })
+
+        // add these buttons to the div
+        div.append(cancel);
+        div.append(restart);
+
+        // add div to elems
+        elems.push(div);
+
+        // add the div to the body
+        let body = Utils.create('div', {})
+        body.append(...elems);
+        return body;
+    }
+
+    // builds the settings modal
+    function settings() {
+        let elems = [];
+
+        elems.push(Utils.create('h1', {
+            className: 'modal-h1',
+            textContent: 'Settings',
+        }))
+
+        // create the settings
+        elems.push(
+            createSetting('Word Length', 'Press one of these buttons to change the length of the word to guess!', [3, LEN, 12]),
+        );
+
+        // append to body
+        let body = Utils.create('div', {})
+        body.append(...elems);
+        return body;
+    }
+
+    function createSetting(name, desc, value) {
+        let settingText = Utils.create('div', {
+            className: 'setting-text'
+        })
+
+        settingText.append(Utils.create('h3', {
+            className: 'modal-header-3',
+            textContent: name,
+        }));
+
+        settingText.append(Utils.create('p', {
+            className: 'modal-description',
+            textContent: desc,
+        }));
+
+        // Build the button grid
+        var inputDiv;
+        let div;        // div to return; parent div of setting
+
+        inputDiv = Utils.create('div', {
+            className: 'btn-grid',
+        });
+
+        let min = value[0];
+        let val = value[1];
+        let max = value[2];
+
+        for (var i = min; i <= max; i++) {
+            var classes = 'btn btn-dark setting-btn'
+
+            if (i === val) {
+                classes = 'btn btn-primary setting-btn';
+            }
+
+            // create each button
+            var btn = Utils.create('button', {
+                className: classes,
+                textContent: i,
+                value: i,
+                onclick: (e) => { 
+                    // determine which button was pressed and update.
+                    var btn = e.target;
+
+                    // remove old button color
+                    var prev_btn = document.querySelector('.btn-grid').querySelector('.btn-primary')
+                    prev_btn.classList.remove('btn-primary');
+                    prev_btn.classList.add('btn-dark');
+                    
+                    // update button color
+                    btn.classList.remove('btn-dark');
+                    btn.classList.add('btn-primary');
+
+                    // update word length, words, and grid
+                    LEN = +btn.value;
+                    words = structuredClone(allWords[LEN-MIN])
+                    grid.setRowsCols(ROW_COUNT, LEN)
+    
+                    // restart
+                    restartSolver();
+                }
+            })
+
+            inputDiv.append(btn);
+        }
+        div = Utils.create('div', {className: 'settings-block',})
+
+        // create the div of the whole settings block
+        div.append(settingText, inputDiv);
+        return div;
+    }
+
+    function closeModal() {
+        document.querySelector('#modal-close-btn').click();
+    }
+
+    function restartSolver() {
+        grid.resetGrid();
+        words = structuredClone(allWords[LEN-MIN])
+        addWords();
+    }
+
 });

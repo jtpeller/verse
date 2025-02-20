@@ -247,11 +247,9 @@ class GameState {
             // issue toast that guess needs to be in word list
             this.#issueToast('Guess needs to be in word list');
 
-            // debug msg
-            if (this.DEBUG) {
-                console.log("Guess", guess, "not in word list");
-                console.log("Word List:", this.gameWords);
-            }
+            // debugs
+            Utils.log(guess, "Guess not in word list:")
+            Utils.log(this.gameWords, "Word list:")
 
             return;
         }
@@ -264,9 +262,8 @@ class GameState {
         }
 
         // debug msg
-        if (this.DEBUG) {
-            console.log(this.guesses, guess);
-        }
+        Utils.log(this.guess, "Guess:")
+        Utils.log(this.guesses, "Guess list:")
 
         // rate the guess on the board
         let rating = this.rate.rateGuess(guess);

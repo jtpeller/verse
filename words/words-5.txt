@@ -1604,6 +1604,7 @@ lamps
 lance
 lands
 lanes
+lanky
 lapel
 lapse
 large
@@ -3181,7 +3182,6 @@ weigh
 weird
 welds
 welsh
-wench
 wetly
 whack
 whale
@@ -3201,7 +3201,6 @@ whisk
 white
 whole
 whoop
-whore
 whorl
 whose
 wicks

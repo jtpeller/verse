@@ -73,7 +73,7 @@ class Grid {
     createCell(j, rating = -1, value = '') {
         // for use when caller wants to define a rated row
         var cellClass = 'game-cell';
-        if (rating != [] && rating >= 0 && rating <= 2) {
+        if (rating >= 0 && rating <= this.classes.length) {
             cellClass += ' ' + this.classes[rating]
         }
 
@@ -91,8 +91,6 @@ class Grid {
         if (rownum < 0 || rownum >= this.rows) {
             return;
         }
-
-        console.log(this.rows);
 
         // loop through all others and remove highlighted
         this.activeRow = rownum;
