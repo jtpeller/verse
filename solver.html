@@ -11,8 +11,8 @@
     <!-- CSS & Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel='stylesheet' href='styles/common.css'>
-    <link rel='stylesheet' href='styles/keyboard.css'>
     <link rel='stylesheet' href='styles/modal.css'>
+    <link rel='stylesheet' href='styles/keyboard.css'>
     <link rel='stylesheet' href='styles/grid.css'>
     <link rel='stylesheet' href='styles/solver.css'>
 
@@ -27,46 +27,48 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container text-center">
         <div class="header">
-            <h1 class="title mx-auto">
+            <h1 class="title mx-auto" data-bs-toggle="tooltip" data-bs-placement="right"
+            data-bs-title="Cheater? Maybe. But I won't tell.">
                 <a class="link" href="index.html">Verse! Solver</a>
             </h1>
         </div>
+
         <div id="solver">
-            <div class="text-center mx-auto">
-                <div class="game-btns" id="buttons">
-                    <span data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Help" id="Help" value="0">
-                        <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Help">
-                            <img class="game-svg" src="resources/help.svg" alt="Help">
-                        </a>
-                    </span>
-    
-                    <span data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Restart" id="Restart" value="1">
-                        <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Restart">
-                            <img class="game-svg" src="resources/restart.svg" alt="Restart">
-                        </a>
-                    </span>
-    
-                    <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                            data-bs-title="↓ Word List ↓" href="#word-list">
-                        <img class="game-svg" src="resources/arrow.svg" alt="Arrow Word List">
+            <div class="game-btns" id="buttons">
+                <span data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Help" id="Help" value="0">
+                    <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Help">
+                        <img class="game-svg" src="resources/help.svg" alt="Help">
                     </a>
-                    
-                    <span data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Settings" id="Settings" value="2">
-                        <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                            data-bs-title="Settings">
-                            <img class="game-svg" src="resources/settings.svg" alt="Settings">
-                        </a>
-                    </span>
-                </div>
-    
-                <div id="grid-div" class="row mx-auto">
-                    <div id="grid" class="game-grid"></div>
-                </div>
-                <div id="keyboard" class="keyboard"></div>
+                </span>
+
+                <span data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Restart" id="Restart" value="1">
+                    <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Restart">
+                        <img class="game-svg" src="resources/restart.svg" alt="Restart">
+                    </a>
+                </span>
+
+                <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        data-bs-title="↓ Word List ↓" href="#word-list">
+                    <img class="game-svg" src="resources/arrow.svg" alt="Arrow Word List">
+                </a>
+                
+                <span data-bs-toggle="modal" data-bs-target="#modal" data-bs-button="Settings" id="Settings" value="2">
+                    <a class="btn game-btn" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        data-bs-title="Settings">
+                        <img class="game-svg" src="resources/settings.svg" alt="Settings">
+                    </a>
+                </span>
             </div>
+
+            <div class="game-board" id="board">
+                <div class="game-grid" id="grid"></div>
+            </div>
+            <div id="keyboard" class="keyboard"></div>
+
             <hr class="w-75 mx-auto">
+
             <div id="word-div">
                 <h2 class="text-center" id="word-list">Word List</h2>
                 <p class="text-center fst-italic mx-auto mb-4">

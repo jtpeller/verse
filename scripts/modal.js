@@ -7,6 +7,13 @@
 'use strict';
 
 class Modal {
+    /**
+     * Class MODAL -- Handles triggering the modal element
+     * @param loc           valid selector to get the model element's ID.
+     * @param modal_funcs   series of functions called to populate the modal
+     *                      indexed based on the value, so whatever triggers 
+     *                      the modal should have a value=<idx> attribute.
+     */
     constructor(loc, modal_funcs) {
         this.loc = loc;
 

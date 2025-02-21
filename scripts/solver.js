@@ -6,10 +6,6 @@
 // =================================================================
 'use strict';
 
-// TODO: fix restart
-// TODO: fix settings
-// TODO: maybe once a cell is marked complete + submit, it should stay that value/class to make things easier?
-
 /**
  * event listener to populate the page.
  */
@@ -45,11 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // bot to handle guesses and whatnot
     let bot = null; 
 
-    // modal for helpers
-    let solverState = {
-        wordLength: LEN,
-    }
-
+    // modals for button functionality.
     let modal_funcs = [help, restart, settings];
     let modal = new Modal('#modal', modal_funcs);
 
@@ -84,19 +76,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 cell.addEventListener('click', function(e) {
                     var tgt = e.target;
                     let list = tgt.classList
-                    if (list.contains('incorrect')) {
-                        list.toggle('incorrect')
-                        list.toggle('present')
-                    } else if (list.contains('present')) {
-                        list.toggle('present')
-                        list.toggle('correct')
-                    } else if (list.contains('correct')) {
-                        list.toggle('correct')
-                    } else {
-                        list.toggle('incorrect')
-                    }
 
-                    // once toggled, you must update the wordlist!
+                    // limit row to current row
+                    var row = tgt.parentNode;
+                    var row_id = row.id.split('-');
+                    var rownum = +row_id[1];
+                    if (rownum == curr_row) {
+                        // toggle between different rows
+                        if (list.contains('incorrect')) {
+                            list.toggle('incorrect')
+                            list.toggle('present')
+                        } else if (list.contains('present')) {
+                            list.toggle('present')
+                            list.toggle('correct')
+                        } else if (list.contains('correct')) {
+                            list.toggle('correct')
+                        } else {
+                            list.toggle('incorrect')
+                        }
+                    }
                 })
             }    
         }
@@ -133,6 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
         addWords();        
     }
 
+    // adds words to the page.
     function addWords() {
         wdiv.innerHTML = '';
         for (let i = 0; i < words.length; i++) {
@@ -143,12 +142,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // updates wordlist.
     function updateWords() {
         words = bot.wordList
         wdiv.innerHTML = '';
         addWords()
     }
 
+    // handles keyboard input given event e.
     function handleInput(e) {
         // if game is already complete, do nothing
         if (curr_row > 5) {
@@ -156,10 +157,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // handle backspace or delete
+        // this is unique bc correct cells must be avoided for ease of use.
         if (e.key === "Backspace" || e.key === "Delete") {
             e.preventDefault();
 
-            // check boundaries (i.e., this.letter is <= 0, do nothing)
+            // check boundaries (i.e., letter is <= 0, do nothing)
             if (letter > 0) {
                 // move letter to previous cell
                 letter--;
@@ -218,6 +220,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // helper to grab a row's rating, given rownum.
     function getRowRating(rownum) {
         let rating = Array(LEN).fill(-1);
         for (let i = 0; i < LEN; i++) {
@@ -233,6 +236,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return rating
     }
 
+    // helper to issue a notification in the corner for user communication
     function issueToast(msg) {
         const toast = bootstrap.Toast.getOrCreateInstance(document.getElementById(TOAST_ID));
         document.querySelector('.toast-body').textContent = msg;   // update msg
@@ -366,6 +370,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return body;
     }
 
+    // helper to create a single setting.
     function createSetting(name, desc, value) {
         let settingText = Utils.create('div', {
             className: 'setting-text'
@@ -437,13 +442,17 @@ document.addEventListener('DOMContentLoaded', function () {
         return div;
     }
 
+    // callback to close the modal
     function closeModal() {
         document.querySelector('#modal-close-btn').click();
     }
 
+    // callback to restart the solver; reset grid, vars, etc.
     function restartSolver() {
+        letter = 0;
+        curr_row = 0;
         grid.resetGrid();
-        words = structuredClone(allWords[LEN-MIN])
+        words = structuredClone(allWords[LEN-MIN]);
         addWords();
     }
 

@@ -169,5 +169,8 @@ class Grid {
                 this.getCell(i, j).classList.remove(...this.classes);
             }
         }
+
+        // highlight the first row again
+        this.highlightRow(0)
     }
 }
