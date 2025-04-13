@@ -10,51 +10,65 @@ class Clique extends Bot {
     constructor(props) {
         super(props);
 
-        // bot-specific logic attributes
-        if (this.length == 5) {
-            // use a precomputed list of words as a clique
-            // Q is leftover
-            this.clique = ["fjord", "gucks", "nymph", "vibex", "waltz"];
+        switch (this.length) {
+            case 3:
+                // technically not possible
+                this.clique = [];
+            case 4:
+                this.clique = [];
+            case 5:
+                // use a precomputed list of words as a clique set
+                // Q is leftover
+                this.clique = ["FJORD", "GUCKS", "NYMPH", "VIBEX", "WALTZ"];
+                break;
+            case 6:
+                this.clique = ["ABDUCT", "ABHORS", "ABJECT", "KINGLY"];
+                break;
+            case 7:
+                this.clique = ["FLOCKED", "JUMPING", "SWARTHY"];
+                break;
+            case 8:
+                this.clique = ["ABDUCTOR", "FLESHING", "SHELVING"];
+                break;
+            case 9:
+                this.clique = ["AFTERGLOW", "CHIPMUNKS"];
+                break;
+            case 10:
+                this.clique = ["CHARMINGLY", "JUXTAPOSED"];
+                break;
+            case 11:
+                // with the current word list, this word eliminates every other word
+                this.clique = ["PRECAUTIONS"];
+                break;
+            case 12:
+                // with the current word list, this word eliminates every other word
+                this.clique = ["REPLICATIONS"];
+                break;
+            default:
+                throw new Error("Length is broken! This makes me sad. --> :(");
         }
-
-        // If game length < 5, clique can't hit enough letters
-        else if (this.length < 5) {
-            // clique will work similar to eliminator, and figure out how to eliminate as many as possible
-
-        }
-
-        // if game length > 5, making a clique is a lot easier
-        else if (this.length > 5) {
-
-        }
-
-        // getting here is a problem.
-        else {
-            throw new Error("Length is broken! This makes me sad. --> :(");
-        }
-    }
-
-    precalculate() {
-        return;     // do nothing.
     }
 
     selectGuess() {
-        // if we're on our last guess
-        if (this.nGuesses == this.maxGuesses - 1) {
+        // if we've already guessed the whole clique
+        if (this.nGuesses == this.clique.length || this.clique.length == 0) {
             // utilize the updated word list with all clues to determine what to do.
+            // RNG an index
+            let idx = this.rng(this.wordCount);
+            let guess = this.wordList[idx];
+
+            if (this.DEBUG) {
+                console.log("Index", idx, "word", guess)
+            }
+
+            // return that word
+            this.addGuess(guess)
+            return guess;
         } else {
             // extract the value from the clique & return
-            guess = this.clique[this.nGuesses];
+            let guess = this.clique[this.nGuesses];
             this.addGuess(guess)
             return guess;
         }
-    }
-
-    update() {
-        // 
-    }
-
-    reset() {
-        
     }
 }

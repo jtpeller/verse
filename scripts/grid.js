@@ -35,10 +35,10 @@ class Grid {
         if (!this.grid) {
             throw new Error(`Grid location does not exist.`)
         }
-        
+
         // grid must be clear
         this.grid.innerHTML = '';       // clear grid.
-       
+
         // attributes
         this.activeRow = 0;     // which row is being worked on.
 
@@ -47,7 +47,7 @@ class Grid {
             this.grid.append(this.createRow(i));
         }
     }
-    
+
     /**
      * createRow() -- creates a game row thingy
      * @param {int} i               // which row this is
@@ -55,10 +55,10 @@ class Grid {
      * @param {string} [value='']   // value for the row to take on (i.e., a user's/bot's guess)
      */
     createRow(i, prefix = '', rating = [], value = '') {
-        var row = Utils.create('div', { 
+        var row = Utils.create('div', {
             className: "game-row",
             style: `grid-template-columns: repeat(${this.cols}, 0fr);`,
-            id: `${prefix}row-${i}` 
+            id: `${prefix}row-${i}`
         })
 
         // for the word length
@@ -77,7 +77,7 @@ class Grid {
             cellClass += ' ' + this.classes[rating]
         }
 
-        let cell = Utils.create('div', { 
+        let cell = Utils.create('div', {
             className: cellClass,
             id: `cell-${j}`,
             textContent: value,

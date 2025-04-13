@@ -9,27 +9,91 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 
     <!-- CSS & Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel='stylesheet' href='styles/common.css'>
     <link rel='stylesheet' href='styles/tester.css'>
 
     <!-- scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="scripts/common.js"></script>
-    <script src="scripts/tester.js"></script>
+    <script src='https://d3js.org/d3.v7.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="scripts/utils.js" type="text/javascript"></script>
+    <script src="scripts/bot.js" type="text/javascript"></script>
+    <script src="scripts/prng.js" type="text/javascript"></script>
+    <script src="scripts/frng.js" type="text/javascript"></script>
+    <script src="scripts/clique.js" type="text/javascript"></script>
+    <script src="scripts/eliminator.js" type="text/javascript"></script>
+    <script src="scripts/manager.js" type="text/javascript"></script>
+    <script src="scripts/rate.js" type="text/javascript"></script>
+    <script src="scripts/tester.js" type="text/javascript"></script>
 </head>
 
 <body>
-    <div id="content">
-        <div class="banner">
-            <span class="title-box">
-                <h1 class="title mx-auto">
-                    <a class="link" href="index.html">Verse!</a>
-                </h1>
-            </span>
+    <div class="container text-center pb-5" id="content">
+        <div class="header">
+            <h1 class="title mx-auto" data-bs-toggle="tooltip" data-bs-placement="right"
+                data-bs-title="Interested in statistics, eh?">
+                <a class="link" href="index.html">Verse! Tester</a>
+            </h1>
         </div>
-        <div>
-            <h2 class="text-center">Under Construction</h2>
+        <div class="text-start" id="explanations">
+            <h2 class="page-header-2">Welcome!</h2>
+            <p>
+                Welcome to the Verse! Bot Tester. This presents the results from running the bots against 1000 random
+                games.
+            </p>
+            <h2 class="page-header-2">Details, please</h2>
+            <p>
+                Games like this enable many different strategies. This page assesses the differences
+                between different playstyles, and attempts to determine which playstyle is best.
+            </p>
+            <p>
+                The bot strategies are presented below:
+            </p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item bg-dark">
+                    <b>Clique</b>: Bot designed to pick a path to cover as many letters as possible. For instance, the
+                    words "fjord", "gucks", "nymph", "vibex", and "waltz" cover every letter of the alphabet except Q,
+                    in 5 guesses. This means by the 6th guess, the bot should have all the information it needs to get
+                    the answer right.
+                </li>
+                <li class="list-group-item bg-dark">
+                    <b>Eliminator</b>: Bot designed to make guesses that eliminate as many words from the list as
+                    possible, narrowing the list until it guesses right or runs out of guesses.
+                </li>
+                <li class="list-group-item bg-dark">
+                    <b>FRNG</b>: Fully-randomized guesses. Picks a word out of the entire word list at random.
+                </li>
+                <li class="list-group-item bg-dark">
+                    <b>PRNG</b>: Partially-randomized guesses. Picks a word out of the entire word list at random,
+                    utilizes the clues, and narrows down the guesses.
+                </li>
+            </ul>
+            <p>
+                Strategies are assessed based on number of guesses and percentage correct. Minimized guesses and
+                maximized percentage correct are ideal. The words that bots got wrong in the experiment will also be
+                tracked.
+            </p>
+            <h2 class="page-header-2">Results</h2>
+            <p>The results from running this experiment are presented in the bar chart below!</p>
+            <p> This bar chart represents the number of games correct. In other words, how many words out of 1,000 did
+                the bot get correct?</p>
+            <div class="chart" id="correct-svgdiv"></div>
+            <p> This final bar chart shows the average guesses each bot made across those 1,000 games. Lower is better,
+                and it seems that Eliminator is the most capable bot tested.</p>
+            <div class="chart" id="avg-guesses-svgdiv"></div>
+            <p> These results demonstrate that the best bot, Eliminator, is not only utilizes the fewest number of
+                guesses, but also achieved a 98% accuracy rate across all games.</p>
+            <!--
+            <div class="text-center">
+                <button id="run-btn" type="button" class="btn btn-outline-primary w-75">Run your own!</button>
+                <div class="spinner-grow" id="loader" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            -->
         </div>
     </div>
 </body>

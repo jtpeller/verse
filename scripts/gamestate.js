@@ -34,7 +34,7 @@ class GameState {
         this.correct = false;       // whether user found the word 
         this.finished = false;      // if the game finished. used to prevent devtool abuse. I'm looking at you, cheater. 
         this.winner = false;        // whether user beat the bot
-        
+
         // words and such
         this.allWords = [];         // Array of arrays. each array corresponds to word length (idx+3)
         this.gameWords = [];        // points to one of the arrays of allWords for ease of access.
@@ -50,7 +50,7 @@ class GameState {
 
         // create the keyboard
         this.keyboard = new Keyboard('#keyboard', this.CLASSES);
-        
+
         // create keyboard listener
         document.addEventListener('keydown', (e) => this.#handleInput(e));
     }
@@ -69,7 +69,7 @@ class GameState {
 
         // bot_props goes to bot via Manager
         const bot_props = {
-            wordList: structuredClone(this.gameWords),
+            wordList: this.gameWords.slice(),
             length: this.wordLength,
             guesses: this.guessCount,
             DEBUG: this.DEBUG,
@@ -125,7 +125,7 @@ class GameState {
         this.setCorrect(false);
         this.checkWinner();
     }
-    
+
     resetGameState() {
         // stop spinning restart button.
         document.querySelector('#Restart').classList.remove('spin');
@@ -135,7 +135,7 @@ class GameState {
 
         // reset keyboard
         this.keyboard.reset();
-        
+
         // reset other game values
         this.nGuesses = 0;      // reset row
         this.letter = 0;        // reset col
@@ -199,7 +199,7 @@ class GameState {
             Utils.log(this.guessCount, "Guess Count fails value assertion:")
         }
     }
-    
+
     // setWordLength() -- appropriately set the word length. Also updates game words.
     setWordLength(new_length) {
         if (new_length >= this.MIN_LENGTH && new_length <= this.MAX_LENGTH) {
@@ -207,8 +207,8 @@ class GameState {
             this.wordLength = +new_length;
 
             // also update game words
-            this.gameWords = this.allWords[this.wordLength-this.MIN_LENGTH];
-            
+            this.gameWords = this.allWords[this.wordLength - this.MIN_LENGTH];
+
             // call grid to update.
             this.grid.setRowsCols(this.guessCount, this.wordLength);
         } else if (this.DEBUG) {
@@ -236,7 +236,7 @@ class GameState {
             this.botStats.addCorrect(false);
         }
     }
-    
+
     /**
      * checkGuess() - check whether the guess is correct
      * @param guess {String}    The guess to check
@@ -282,7 +282,7 @@ class GameState {
             this.checkWinner();
 
             // issue toast
-            this.#issueToast(this.WIN_RATINGS[this.nGuesses-1]);
+            this.#issueToast(this.WIN_RATINGS[this.nGuesses - 1]);
 
             // init end-game modal
             document.querySelector('#Ended').click();
@@ -352,14 +352,14 @@ class GameState {
             // buffer is full, do nothing
         }
     }
-    
+
     // issues a bootstrap toast upon errors or successful wins or whatever
     #issueToast(msg) {
         const toast = bootstrap.Toast.getOrCreateInstance(document.getElementById(this.TOAST_ID));
         document.querySelector('.toast-body').textContent = msg;   // update msg
         toast.show();       // show the toast
     }
-    
+
     // picks the verse word
     #selectWord() {
         // interesting words to test: SLAYS, CORNY
@@ -399,7 +399,7 @@ class GameState {
             let cell, key;
             let letter = guess[i];
             let val = this.CLASSES[rating[i]]
-            
+
             cell = this.grid.getCell(this.nGuesses, i);
             key = document.querySelector(`#key-${letter}`);
 

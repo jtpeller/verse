@@ -52,7 +52,7 @@ class Keyboard {
                     if (this.enabled) {       // only dispatch if keyboard is enabled
                         const btn = e.target;
                         const val = btn.getAttribute('value');
-    
+
                         document.dispatchEvent(new KeyboardEvent(
                             'keydown', { 'key': val }
                         ))
@@ -96,7 +96,7 @@ class Keyboard {
         // loop through each of the classes
         for (var i = 0; i < this.classes.length; i++) {
             // extract all keys with that class
-            var list = this.element.querySelectorAll('.'+this.classes[i]);
+            var list = this.element.querySelectorAll('.' + this.classes[i]);
             var arr = [...list];
 
             // loop only through those keys for speed & remove class

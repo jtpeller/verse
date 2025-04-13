@@ -14,8 +14,14 @@ class PRNG extends Bot {
     selectGuess() {
         // RNG an index
         let idx = this.rng(this.wordCount);
+        let guess = this.wordList[idx];
+
+        if (this.DEBUG) {
+            console.log("Index", idx, "word", guess)
+        }
 
         // return that word
-        return this.wordList[idx];
+        this.addGuess(guess)
+        return guess;
     }
 }

@@ -1,11 +1,9 @@
-"""
 # =================================================================
 # = generate_lists.py
 # =  Description   : Generates the word lists from words.txt
 # =  Author        : jtpeller
 # =  Date          : 2025.01.03
 # =================================================================
-"""
 
 def remove_uppercase():
     """ 

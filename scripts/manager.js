@@ -6,6 +6,20 @@
 // =================================================================
 'use strict';
 
+/**
+ * Manages the bots running, so each bot can just contain logic.
+ * @param {Object} props        Contains game-related properties:
+ * @param {Number} mode             > which bot to pick. 0 = FRNG, 1 = PRNG, 2 = ELIM, 3 = CLIQ
+ * @param {Number} maxGuesses       > Maximum number of guesses
+ * @param {Rate} rate               > Rate class, for rating guesses
+ * @param {boolean} DEBUG           > used for output debugging.
+ * @param {Object} botprops     Contains props destined for the bot.
+ * @param {String[]} wordList       > word list (all same length)
+ * @param {int} wordCount           > wordList array length
+ * @param {int} length              > word length
+ * @param {int} maxGuesses          > maximum number of guesses
+ * @param {boolean} DEBUG           > used for output debugging.
+ */
 class Manager {
     // Bot mode "enum"
     MODE = Object.freeze({
@@ -16,15 +30,6 @@ class Manager {
         /* add new bots here, also add to switch later */
     });
 
-    /**
-     * Manages the bots running, so each bot can just contain logic.
-     * @param {Object} props        | Contains game-related properties:
-     * @param {Number} mode         | which bot to pick. 0 = FRNG, 1 = PRNG, 2 = ELIM, 3 = CLIQ
-     * @param {Number} maxGuesses   | Maximum number of guesses
-     * @param {Rate} rate           | Rate class, for rating guesses
-     * @param {boolean} DEBUG       | used for output debugging.
-     * @param {Object} botprops     | Contains props destined for the bot.
-     */
     constructor(props, botprops) {
         // save the game properties
         this.mode = props.mode;
@@ -67,7 +72,7 @@ class Manager {
                 break;
         }
     }
-    
+
     /**
      * PlayGame() -- starting point for the bot.
      */
@@ -87,12 +92,18 @@ class Manager {
 
             // step 2: select word
             var guess = this.bot.selectGuess();
-            this.bot.log(guess, "Guess:");
+            if (this.DEBUG) {
+                console.log("Guess: " + guess);
+            }
 
             // step 3: get rating
-            var rating = this.rate.rateGuess(guess);
-            this.ratings.push(rating);
-            this.bot.log(rating, 'Rating:');
+            if (guess) {
+                var rating = this.rate.rateGuess(guess);
+                this.ratings.push(rating);
+            } else {
+                console.error("Guess is undefined!")
+                console.log(this.bot.wordList);
+            }
 
             // step 4: check if correct
             if (!rating.includes(0) && !rating.includes(1)) {
@@ -111,7 +122,11 @@ class Manager {
         return;
     }
 
-    reset(new_list = null) {
+    getGuessCount() {
+        return this.bot.getGuessCount();
+    }
+
+    reset(new_list = null, run_again = true) {
         // reset bot-specific values
         this.ratings = [];
 
@@ -123,8 +138,8 @@ class Manager {
         }
 
         // then, Play a new game
-        this.PlayGame();
-
-        // check state
+        if (run_again) {
+            this.PlayGame();
+        }
     }
 }

@@ -14,7 +14,7 @@ class Rate {
     constructor(word, uuid) {
         this.#word = word;
         this.#uuid = uuid;
-        this.wordLength = word.length;
+        this.wordLength = word ? word.length : 0;
     }
 
     /**
@@ -39,22 +39,22 @@ class Rate {
 
                 // any letter marked as correct should be removed from the wordcopy
                 wordCopy = wordCopy.replace(letter, ' ');
-            } 
+            }
         }
 
         // now, check remaining letters to see if they exist in the word
         for (let i = 0; i < this.wordLength; i++) {
             let letter = temp[i];
 
-            if (this.#word.includes(letter) && wordCopy.includes(letter) ) {
+            if (this.#word.includes(letter) && wordCopy.includes(letter)) {
                 // set the rating, but only if the cell is not already set
                 if (rating[i] === 0) {
                     rating[i] = 1;
                 }
-                
+
                 // now that it has been marked as incorrect, remove instance from wordcopy
                 wordCopy = wordCopy.replace(letter, ' ');
-            } 
+            }
             // if the latter is not true, then the word does not contain the letter and it is marked wrong
             // no action is necessary because rating is already filled with 0s.
         }
@@ -66,6 +66,8 @@ class Rate {
         if (this.#uuid == uuid) {
             this.#word = word;
             this.wordLength = word.length;
+        } else {
+            console.error("Unauthorized word change!")
         }
     }
 }

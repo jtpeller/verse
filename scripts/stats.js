@@ -40,7 +40,7 @@ class Stats {
             // increment correct
             this.stats.correct++;
         }
-        
+
         // update correct percentage
         this.stats.correctperc = this.#divide(this.stats.correct, this.stats.played);
     }
@@ -55,7 +55,7 @@ class Stats {
             // increment won, streak
             this.stats.won++;
             this.stats.currentStreak++;
-            
+
             // update max streak if necessary
             if (this.stats.currentStreak > this.stats.maxStreak) {
                 this.stats.maxStreak = this.stats.currentStreak;

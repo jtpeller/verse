@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const CLASSES = ['incorrect', 'present', 'correct'];
     const TOAST_ID = "toast-msg";
     const DEBUG = false;
-    
+
     // useful values
     let allWords = [];
     let words = [];
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let keyboard = new Keyboard('#keyboard', CLASSES);
 
     // bot to handle guesses and whatnot
-    let bot = null; 
+    let bot = null;
 
     // modals for button functionality.
     let modal_funcs = [help, restart, settings];
@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // ref: https://getbootstrap.com/docs/5.3/components/tooltips/#enable-tooltips
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-    
-    
+
+
     // next, append word list for default len
     Utils.promiseWords(wordsCallback);
 
@@ -63,6 +63,16 @@ document.addEventListener('DOMContentLoaded', function () {
     // =
     // =================================================================
 
+    // callable function to init a new bot
+    function initBot() {
+        bot = new Bot({
+            wordList: words.slice(),
+            length: LEN,
+            guesses: ROW_COUNT,
+            DEBUG: DEBUG,
+        })
+    }
+
     // This enables the grid's click-to-change-cell-class functionality
     function initLetterGrid(elem) {
         // loop through each row
@@ -71,32 +81,36 @@ document.addEventListener('DOMContentLoaded', function () {
             for (let idx = 0; idx < LEN; idx++) {
                 // create the cell element
                 let cell = row_elem.querySelector(`#cell-${idx}`)
-    
-                // add the listener to the cell. this will toggle between the different classes
-                cell.addEventListener('click', function(e) {
-                    var tgt = e.target;
-                    let list = tgt.classList
+                cell.removeEventListener('click', handleCellClick);  // make sure there's no pre-existing ones.
 
-                    // limit row to current row
-                    var row = tgt.parentNode;
-                    var row_id = row.id.split('-');
-                    var rownum = +row_id[1];
-                    if (rownum == curr_row) {
-                        // toggle between different rows
-                        if (list.contains('incorrect')) {
-                            list.toggle('incorrect')
-                            list.toggle('present')
-                        } else if (list.contains('present')) {
-                            list.toggle('present')
-                            list.toggle('correct')
-                        } else if (list.contains('correct')) {
-                            list.toggle('correct')
-                        } else {
-                            list.toggle('incorrect')
-                        }
-                    }
-                })
-            }    
+                // add the listener to the cell. this will toggle between the different classes
+                cell.addEventListener('click', handleCellClick)
+            }
+        }
+    }
+
+    // handles a cell being clicked
+    function handleCellClick(e) {
+        var tgt = e.target;
+        let list = tgt.classList
+
+        // limit row to current row
+        var row = tgt.parentNode;
+        var row_id = row.id.split('-');
+        var rownum = +row_id[1];
+        if (rownum == curr_row) {
+            // toggle between different rows
+            if (list.contains('incorrect')) {
+                list.toggle('incorrect')
+                list.toggle('present')
+            } else if (list.contains('present')) {
+                list.toggle('present')
+                list.toggle('correct')
+            } else if (list.contains('correct')) {
+                list.toggle('correct')
+            } else {
+                list.toggle('incorrect')
+            }
         }
     }
 
@@ -111,24 +125,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 allWords.push(data[i].toUpperCase().split("\n"));
             }
         }
-        
+
         // after leaving the loop, select the default
-        words = structuredClone(allWords[LEN - MIN]);
+        words = allWords[LEN - MIN].slice();
 
         // instantiate bot
-        bot = new Bot({
-            wordList: structuredClone(words),
-            length: LEN,
-            guesses: ROW_COUNT,
-            DEBUG: DEBUG,
-        })
+        initBot();
 
         // create keyboard listener
         document.addEventListener('keydown', (e) => handleInput(e));
 
 
         // add words to the page
-        addWords();        
+        addWords();
     }
 
     // adds words to the page.
@@ -192,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (letter == LEN) {
             // extract rating from game-board
             let rating = getRowRating(curr_row);
-            
+
             // verify ratings exist
             if (rating.includes(-1)) {
                 issueToast("Guess must be rated!")
@@ -225,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let rating = Array(LEN).fill(-1);
         for (let i = 0; i < LEN; i++) {
             var cell = grid.getCell(curr_row, i)
-            
+
             // loop through classes
             for (let j = 0; j < CLASSES.length; j++) {
                 if (cell.classList.contains(CLASSES[j])) {
@@ -264,7 +273,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const text = "In a pinch? On the last guess and you desperately need to preserve your streak? Fear not! This solver can help!"
         let header1 = Utils.create('h2', { classList: "modal-h2", textContent: "Overview" })
         let p = Utils.create('p', { textContent: text })
-        
+
         // details
         let header2 = Utils.create('h2', { classList: "modal-h2", textContent: "Steps" })
         let steps = [
@@ -410,7 +419,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 className: classes,
                 textContent: i,
                 value: i,
-                onclick: (e) => { 
+                onclick: (e) => {
                     // determine which button was pressed and update.
                     var btn = e.target;
 
@@ -418,16 +427,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     var prev_btn = document.querySelector('.btn-grid').querySelector('.btn-primary')
                     prev_btn.classList.remove('btn-primary');
                     prev_btn.classList.add('btn-dark');
-                    
+
                     // update button color
                     btn.classList.remove('btn-dark');
                     btn.classList.add('btn-primary');
 
                     // update word length, words, and grid
                     LEN = +btn.value;
-                    words = structuredClone(allWords[LEN-MIN])
+                    words = allWords[LEN - MIN].slice();
                     grid.setRowsCols(ROW_COUNT, LEN)
-    
+
                     // restart
                     restartSolver();
                 }
@@ -435,7 +444,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             inputDiv.append(btn);
         }
-        div = Utils.create('div', {className: 'settings-block',})
+        div = Utils.create('div', { className: 'settings-block', })
 
         // create the div of the whole settings block
         div.append(settingText, inputDiv);
@@ -449,11 +458,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // callback to restart the solver; reset grid, vars, etc.
     function restartSolver() {
+        // reset solver vars
         letter = 0;
         curr_row = 0;
+
+        // reset grid, and reinit listeners
         grid.resetGrid();
-        words = structuredClone(allWords[LEN-MIN]);
+        initLetterGrid();
+
+        // reset words
+        words = allWords[LEN - MIN].slice();
         addWords();
+
+        // reset bot
+        initBot();
     }
 
 });

@@ -9,17 +9,17 @@
 class Bot {
     /**
      * Parent class for a bot. Functionality defined in child class.
-     * @param {Object} props            | contains these fields:
-     * @param {String[]} wordList       | word list (all same length)
-     * @param {int} wordCount           | wordList array length
-     * @param {int} length              | word length
-     * @param {int} maxGuesses          | maximum number of guesses
-     * @param {boolean} DEBUG           | used for output debugging.
+     * @param {Object} props            contains these fields:
+     * @param {String[]} wordList       > word list (all same length)
+     * @param {int} wordCount           > wordList array length
+     * @param {int} length              > word length
+     * @param {int} maxGuesses          > maximum number of guesses
+     * @param {boolean} DEBUG           > used for output debugging.
      */
     constructor(props) {
         // extract class properties
         this.wordList = props.wordList;
-        this.original = structuredClone(props.wordList);
+        this.original = props.wordList.slice();
         this.wordCount = props.wordList.length;
         this.length = props.length;
         this.maxGuesses = props.guesses;
@@ -31,7 +31,7 @@ class Bot {
         this.scores = [];       // score based on how many words will be eliminated
         this.guesses = [];      // array of guesses. Array<String>
         this.correct = false;   // whether the correct word has been found
-        
+
         this.regex = Array(this.length).fill(`[ABCDEFGHIJKLMNOPQRSTUVWXYZ]+`);
         this.flagged = [];      // array of letters marked "present"
     }
@@ -52,7 +52,7 @@ class Bot {
     }
 
     // log value
-    #log(value, name="") {
+    log(value, name = "") {
         if (this.DEBUG) {
             console.log(name, JSON.parse(JSON.stringify(value)));
         }
@@ -63,12 +63,10 @@ class Bot {
      */
     reset() {
         // ensure word list is a clean copy.
-        this.wordList = structuredClone(this.original);
-        if (this.DEBUG) {
-            this.#log(this.wordList, "Word List:");
-            this.#log(this.original, "Original:");
-        }
-        
+        this.wordList = [...this.original];
+        this.log(this.wordList, "Word List:");
+        this.log(this.original, "Original:");
+
         // reset wordCount and word length from original list.
         this.wordCount = this.wordList.length;
         this.length = this.wordList[0].length;
@@ -78,11 +76,15 @@ class Bot {
         this.nGuesses = 0;      // number of guesses made    
         this.prob = [];         // letter counts
         this.scores = [];       // score based on how many words will be eliminated
-        this.guesses = [];      // array of guesses. Array<String>
+        this.guesses = [];      // array of guesses. String[]
         this.correct = false;   // whether the correct word has been found
 
         // other parameters need not change upon reset.
         this.regex = Array(this.length).fill(`[ABCDEFGHIJKLMNOPQRSTUVWXYZ]+`);
+    }
+
+    getGuessCount() {
+        return this.guesses.length;
     }
 
     /**
@@ -90,7 +92,7 @@ class Bot {
      */
     setWordList(new_list) {
         // save list
-        this.original = structuredClone(new_list);
+        this.original = [...new_list];
 
         // reset bot
         this.reset();
@@ -101,6 +103,7 @@ class Bot {
      */
     updateRegex(guess, rating) {
         var correct = Array(this.length).fill(false);
+        let checked = '';
 
         // loop through and check all correct letters
         for (let i = 0; i < this.length; i++) {
@@ -110,17 +113,29 @@ class Bot {
                 // means letter is correct. replace with just this letter
                 this.regex[i] = letter;
                 correct[i] = true;
+                checked += letter;      // this letter COULD exist in the word elsewhere!
             }
         }
 
         // loop through and check all present (i.e., rating=1) letters
-        let checked = '';
         for (let i = 0; i < this.length; i++) {
             let letter = guess[i];
             if (rating[i] == 1) {
+                // present letters are flagged
+                this.flagged.push(letter)
+
                 // means letter exists, but in wrong spot, remove letter from this spot
                 this.regex[i] = this.regex[i].replace(letter, '');
                 checked += letter;      // ensure the "absent" loop doesn't remove this anywhere else
+
+                // there is a useful case, where, a letter that is flagged as present
+                // must be in one of the remaining positions. 
+                // if it was already eliminated from every other position,
+                // but a single slot, that slot MUST be this letter!
+                let idx = this._checkUnique(this.regex, letter)
+                if (idx != -1) {
+                    this.regex[idx] = letter;
+                }
             }
         }
 
@@ -132,7 +147,7 @@ class Bot {
             if (rating[i] == 0) {
                 // means no match.
                 // if the letter has been marked as present elsewhere, only delete from this spot
-                if (checked.includes(letter)) {
+                if (checked.includes(letter) || this.flagged.includes(letter)) {
                     this.regex[i] = this.regex[i].replace(letter, '');
                 } else {
                     // remove from each expression
@@ -145,13 +160,11 @@ class Bot {
             }
         }
 
-        if (this.DEBUG) {
-            this.#log(this.regex, "Regex:");
-        }
+        this.log(this.regex, "Regex:");
     }
 
     /**
-     * Using the rating (and guess), Eliminator updates possibilities (regex + word list).
+     * Using the rating (and guess), updates possibilities (regex + word list).
      */
     update(guess, rating) {
         // if the rating has no 0s or 1s, rating is 100% correct
@@ -170,7 +183,7 @@ class Bot {
                 this.flagged.push(guess[i]);
             }
         }
-        this.#log(this.flagged, "Flagged:");
+        this.log(this.flagged, "Flagged:");
 
         // word will match this combined expression:
         var r = '';
@@ -186,13 +199,25 @@ class Bot {
 
             // test the word
             if (exp.test(word)) {
-                // word matches!
-                temp.push(word);
+                // make sure letters that are "present" are included
+                let has_all_flagged_letters = true
+                for (var j = 0; j < this.flagged.length; j++) {
+                    if (!word.includes(this.flagged[j])) {
+                        has_all_flagged_letters = false
+                    }
+                }
+
+                // only add a word if all present letters are included.
+                if (has_all_flagged_letters) {
+                    // word matches!
+                    temp.push(word);
+                }
             }
         }
 
-        this.wordList = structuredClone(temp);
+        this.wordList = temp;
         this.wordCount = this.wordList.length;
+        this.log(this.wordList, "Updated Wordlist")
     }
 
     /**
@@ -203,5 +228,48 @@ class Bot {
      */
     rng(max) {
         return Math.floor(Math.random() * max);
+    }
+
+    /**
+     * helper function to determine if a letter that has been marked present only exists in one spot
+     * @param {String[]} array      array to check!
+     * @param {String} letter       str of length 1. 
+     * 
+     * @returns {Number}            index of array where letter is exclusive. If it isn't, -1
+     */
+    _checkUnique(array, letter) {
+        // letter must be str of length 1
+        if ((typeof (letter) == 'string' || letter instanceof String) && letter.length > 1) {
+            return -1;
+        }
+
+        // compute flags on whether it is unique.
+        let flags = Array(array.length).fill(false);
+        for (let i = 0; i < array.length; i++) {
+            // skip over fields where the array's length is zero
+            if (array[i].length <= 1) {
+                continue;
+            }
+
+            // if it contains the letter, mark as true
+            if (array[i].includes(letter)) {
+                flags[i] = true;
+            }
+        }
+
+        // count up trues
+        let t_count = 0;
+        for (let i = 0; i < flags.length; i++) {
+            if (flags[i] === true) {
+                t_count++;
+            }
+        }
+
+        // if there's only one, return the index of that true
+        if (t_count == 1) {
+            return flags.indexOf(true); // exists @ index!
+        } else {
+            return -1;  // DNE
+        }
     }
 }

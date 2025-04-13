@@ -31,7 +31,8 @@
 
     --system-ui: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
-    touch-action: manipulation;     /* disable double-tap-to-zoom for better keyboard UX */
+    touch-action: manipulation;
+    /* disable double-tap-to-zoom for better keyboard UX */
 }
 
 body {
@@ -48,7 +49,9 @@ body {
 
 .modal-dialog-dark {
     /* REDEFINE BOOTSTRAP VARS */
-    --bs-modal-header-border-color: /*var(--border-color);*/ transparent;
+    --bs-modal-header-border-color:
+        /*var(--border-color);*/
+        transparent;
 
     /* SET AS DARK */
     background-color: var(--bg-color) !important;
@@ -78,23 +81,23 @@ body {
     font-size: calc(var(--master-font-size) * var(--subtitle-factor));
 
     transition: background-color var(--transition-dur) ease-in-out,
-                transform var(--transition-dur) ease-in-out;
+        transform var(--transition-dur) ease-in-out;
 }
 
 /* this isn't pretty but it gets the job done */
-.level-0 > .btn-item:hover {
+.level-0>.btn-item:hover {
     background-color: var(--correct-color);
 }
 
-.level-1 > .btn-item:hover {
+.level-1>.btn-item:hover {
     background-color: var(--present-color);
 }
 
-.level-2 > .btn-item:hover {
+.level-2>.btn-item:hover {
     background-color: var(--incorrect-color);
 }
 
-.level-3 > .btn-item:hover {
+.level-3>.btn-item:hover {
     background-color: var(--toast-color);
 }
 
@@ -117,7 +120,7 @@ body {
     margin-top: var(--banner-top-pad);
     font-size: calc(var(--master-font-size) * var(--title-factor));
     transition: font-size var(--transition-dur) ease,
-                margin-top var(--transition-dur) ease;
+        margin-top var(--transition-dur) ease;
 }
 
 .toast {

@@ -93,7 +93,7 @@ class Eliminator extends Bot {
 
         // loop through list
         for (let i = 0; i < this.wordCount; i++) {
-            // Set to avoid skewing toward multi-occurrence letters
+            // use a Set to avoid skewing toward multi-occurrence letters
             // (e.g., SULLY has 2 L's but only count: S, U, L, Y)
             var word = Array.from(new Set(this.wordList[i]));
             var wordlen = word.length;
@@ -118,15 +118,15 @@ class Eliminator extends Bot {
         }
 
         // afterward, make sure to weight flagged letters more heavily.
-        for (let i = 0; i < this.flagged.length; i++) {
-            var flag = this.flagged[i];
-            letters[flag] *= this.FACTOR;
-        }
+        //for (let i = 0; i < this.flagged.length; i++) {
+        //    var flag = this.flagged[i];
+        //    letters[flag] *= this.FACTOR;
+        //}
 
         // empty flagged letters array
         this.flagged = [];
 
-        // store it for later use
+        // store it for later use by deep-copying the obj.
         this.prob = structuredClone(letters);
         return;
     }
@@ -145,7 +145,7 @@ class Eliminator extends Bot {
         }
 
         // save this as an attribute
-        this.scores = structuredClone(scores);
+        this.scores = scores.slice();
         return;
     }
 
@@ -162,7 +162,7 @@ class Eliminator extends Bot {
 
         return score;
     }
-    
+
     /**
      * getter function to retrieve the probability of a letter
      * (note: this has to access this.prob, leave as method)

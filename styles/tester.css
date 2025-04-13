@@ -1,0 +1,43 @@
+svg {
+    margin: auto;
+}
+
+
+.chart {
+    max-width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.bar {
+    fill: var(--correct-color);
+}
+
+.bar-blank {
+    fill: white;
+}
+
+.bar-label {
+    fill: white;
+    text-anchor: middle;
+    font-size: 25px;
+}
+
+.page-header-2 {
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    margin-top: 15px;
+}
+
+.tick {
+    font-family: "Lucida Console", monospace;
+    font-size: 16px;
+}
+
+.y-axis-label {
+    fill: white;
+    text-anchor: middle;
+    transform: rotate(-90deg);
+    font-size: 25px;
+}

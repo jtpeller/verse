@@ -18,17 +18,17 @@ class Utils {
      * @param {object} options      properties to assign to elem
      * @return {Element}
      */
-    static append(appendee, elem, options={}) {
+    static append(appendee, elem, options = {}) {
         return appendee.appendChild(this.create(elem, options));
     }
-    
+
     /**
      * create() -- wrapper for Object.assign(document.createElement(), options)
      * @param {string} elem     the type of HTML element to make
      * @param {object} options  what properties to assign to it
      * @returns {Element}
      */
-    static create(elem, options={}) {
+    static create(elem, options = {}) {
         return Object.assign(document.createElement(elem), options)
     }
 
@@ -39,7 +39,7 @@ class Utils {
         return window.crypto.randomUUID();
     }
 
-    static log(value, name="") {
+    static log(value, name = "") {
         if (this.DEBUG) {
             console.log(name, JSON.parse(JSON.stringify(value)));
         }
@@ -60,7 +60,7 @@ class Utils {
      * @param {Element} origin  source Element to select from (default: document)
      * @returns {Element}
      */
-    static select(val, origin=document) {
+    static select(val, origin = document) {
         return origin.querySelector(val);
     }
 

@@ -20,21 +20,21 @@ document.addEventListener('DOMContentLoaded', function () {
         let hints = document.querySelector("#hints");
         hints.classList.remove("invisible");
     }
-    
+
     // initialize Game State obj
     let gameState = new GameState({
-        classes: ['incorrect', 'present', 'correct'], 
+        classes: ['incorrect', 'present', 'correct'],
         grid_loc: "#grid",
         toast_id: "toast-msg",
         win_ratings: ["HOW??", "Spectacular!", "Amazing!", "Great!", "Nice!", "Phew!", "Fooey!"],
         debug: DEBUG
     });
-    
+
     // enable tooltips everywhere 
     // ref: https://getbootstrap.com/docs/5.3/components/tooltips/#enable-tooltips
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-    
+
     /*** BEGIN GAME INITIALIZATION ***/
 
     // create modal functionality
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 gameState.allWords.push(data[i].toUpperCase().split("\n"));
             }
         }
-        
+
         // call startGame now
         startGame();
     }
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function startGame() {
         // stop the spinning restart
         document.querySelector('#Restart').classList.remove('spin');
-        
+
         // reset game state: bot manager, game variables, etc., but NOT stats!
         gameState.resetGameState();
     }
@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // create each of the rows for the bot's guesses
-        var botGrid = Utils.create('div', {className: 'game-grid', id: 'bot-grid'})
+        var botGrid = Utils.create('div', { className: 'game-grid', id: 'bot-grid' })
         for (let i = 0; i < gameState.guessCount; i++) {
             // we only SHOW the letters if user completed the game
             // and the guess exists. Always show the rating
@@ -498,7 +498,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 className: classes,
                 textContent: i,
                 value: i,
-                onclick: ((e) => { 
+                onclick: ((e) => {
                     // determine which button was pressed and update.
                     var btn = e.target;
 
@@ -506,7 +506,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     var prev_btn = document.querySelector('.btn-grid').querySelector('.btn-primary')
                     prev_btn.classList.remove('btn-primary');
                     prev_btn.classList.add('btn-dark');
-                    
+
                     // update button color
                     btn.classList.remove('btn-dark');
                     btn.classList.add('btn-primary');
@@ -515,7 +515,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (gameState) {
                         // update word length. this also updates the game word list & grid.
                         gameState.setWordLength(+btn.value);
-    
+
                         // restart game
                         gameState.resetGameState();
                     }
@@ -524,7 +524,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             inputDiv.append(btn);
         }
-        div = Utils.create('div', {className: 'settings-block',})
+        div = Utils.create('div', { className: 'settings-block', })
 
         // create the div of the whole settings block
         div.append(settingText, inputDiv);

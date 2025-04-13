@@ -22,7 +22,7 @@
     transition: height var(--transition-dur) ease;
 }
 
-.game-btn:hover { 
+.game-btn:hover {
     background-color: transparent;
 }
 
@@ -42,14 +42,15 @@
     transition: transform 250ms ease;
 }
 
-.game-btn:hover > .game-svg {
+.game-btn:hover>.game-svg {
     cursor: pointer;
     transform: scale(1.4);
 }
 
 .helper-grid {
     width: fit-content;
-    margin: auto;           /* center */
+    margin: auto;
+    /* center */
 }
 
 .modal-h1 {
@@ -68,7 +69,7 @@
 .modal-description {
     font-style: italic;
     font-weight: lighter;
-    
+
     color: var(--description-text-color);
 }
 
@@ -126,6 +127,7 @@
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }

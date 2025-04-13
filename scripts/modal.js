@@ -28,15 +28,15 @@ class Modal {
         // ... flags for checking whether the selected modal is built.
         this.helpBuilt = false;
         this.helpHTML = '';
-        
+
         // create the event listener for the modal
         this.modal.addEventListener('show.bs.modal', ((event) => {
             // figure out which modal to populate
             const val = +(event.relatedTarget.getAttribute('value'));
-    
+
             // set the title of the modal
             modal.querySelector('#modal-title').innerHTML = '';//type;
-    
+
             // set body of modal to return of the function
             const modal_body = modal.querySelector('#modal-body');
             modal_body.innerHTML = '';
