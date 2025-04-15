@@ -58,119 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
         { name: "FRNG", value: 5.987 },
     ]
 
-    let wrong_words = [
-        {
-            name: "PRNG", value: [
-                "BELLS",
-                "BESTS",
-                "FIXES",
-                "FEARS",
-                "SOBER",
-                "LOVES",
-                "BRINK",
-                "DALES",
-                "ROPES",
-                "CREWS",
-                "JEEPS",
-                "DATER",
-                "ROVES",
-                "VALVE",
-                "AXERS",
-                "DOING",
-                "HILTS",
-                "HALTS",
-                "NERVE",
-                "LOSES",
-                "CLASS",
-                "PASTE",
-                "RAWER",
-                "HIKED",
-                "FUZZY",
-                "HOWLS",
-                "TASTE",
-                "RAVED",
-                "BENDS",
-                "JOKER",
-                "STOVE",
-                "VOWED",
-                "PLOTS",
-                "WEARS",
-                "HAZES",
-                "TUNER",
-                "BOWLS",
-                "EVOKE",
-                "RARER",
-                "HARMS",
-                "SACKS",
-                "BABES"
-            ]
-        },
-        {
-            name: "Eliminator", value: [
-                "FADES",
-                "EARED",
-                "DINED",
-                "ROVER",
-                "DOZES",
-                "SEEPS",
-                "TASTE",
-                "BAYED",
-                "SHAPE",
-                "PAVED",
-                "SEEDS",
-                "LIVES",
-                "VOWED",
-                "BAYED",
-                "WEARS",
-                "SINKS",
-                "RARER",
-                "HIRER",
-                "BABES",
-                "TEXTS"
-            ]
-        },
-        {
-            name: "Clique", value: [
-                "BESTS",
-                "ARSON",
-                "SIREN",
-                "CHILL",
-                "EARED",
-                "SPOOL",
-                "RIDGE",
-                "SLEET",
-                "REVEL",
-                "DROOL",
-                "BULLS",
-                "EDGED",
-                "ODORS",
-                "EGGED",
-                "SEEPS",
-                "ROUGE",
-                "LEADS",
-                "BULBS",
-                "SLIME",
-                "FLAIR",
-                "SLIME",
-                "TROTS",
-                "BUSTS",
-                "PEEPS",
-                "SNOOP",
-                "PLEAS",
-                "SEEDS",
-                "RISES",
-                "SUITS",
-                "SPOON",
-                "ETHER",
-                "SHEDS",
-                "SLEET",
-                "SONAR",
-                "BULLS",
-                "OPTIC"
-            ]
-        }
-    ]
-
     // ... build charts
     buildSVG(correct_svgdiv, correct, "Games Correct", SIM_SIZE);
     buildSVG(avg_svgdiv, avg_guesses, "Average Guess Count", M_GUESSES);
@@ -224,7 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // build chart & append to elem
         let svg = d3.create("svg")
         buildChart(svg, chart_data, y, m)
-        console.log(svg)
         elem.append(svg.node());
 
         function buildChart(svg, data, y_label, max) {
