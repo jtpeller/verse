@@ -39,7 +39,7 @@ body {
     font-family: var(--system-ui);
     background-color: var(--bg-color);
     color: var(--text-color);
-    min-height: 100%;
+    min-height: 100vh;
 }
 
 .bg-dark {
@@ -117,10 +117,10 @@ body {
 
 .title {
     width: fit-content;
-    margin-top: var(--banner-top-pad);
+    padding-top: var(--banner-top-pad);
     font-size: calc(var(--master-font-size) * var(--title-factor));
     transition: font-size var(--transition-dur) ease,
-        margin-top var(--transition-dur) ease;
+        padding-top var(--transition-dur) ease;
 }
 
 .toast {
