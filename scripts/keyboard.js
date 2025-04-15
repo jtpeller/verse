@@ -73,7 +73,7 @@ class Keyboard {
         let arr = Array.from(classes);
 
         // check if the key is not classed
-        if (classes.length <= 1) {
+        if (classes.length <= 1) {      // 1 is minimal classes ("key")
             // just assign provided class
             key.classList.add(class_name);
             return;
@@ -82,6 +82,8 @@ class Keyboard {
         // now, check class priority
         if (priority == 2) {
             // always overwrite current to priority 2
+            key.classList.remove(...key.classList);
+            key.classList.add("key")        // default key
             key.classList.add(class_name);
         } else if (priority == 1 && !arr.includes(this.classes[2])) {
             // only assign if current class is lower priority

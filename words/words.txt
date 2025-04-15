@@ -7707,6 +7707,7 @@ chamberlains
 chambermaid
 Chambers
 chameleon
+champ
 champagne
 Champaign
 champion
@@ -12359,6 +12360,7 @@ deterring
 detest
 detestable
 detested
+detox
 detour
 detonate
 detract
