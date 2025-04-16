@@ -14,11 +14,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const MODAL_LOC = '#modal';
     const DEBUG = false;
     let help_html = '';
+    let HELP = false;
 
-    // TODO: Implement hints.
+    // hints
     if (window.location.search.includes("help=")) {
-        let hints = document.querySelector("#hints");
-        hints.classList.remove("invisible");
+        HELP = true;
     }
 
     // initialize Game State obj
@@ -38,7 +38,15 @@ document.addEventListener('DOMContentLoaded', function () {
     /*** BEGIN GAME INITIALIZATION ***/
 
     // create modal functionality
-    let modal_funcs = [help_modal, botAI, restart, stats, settings, ended];
+    let modal_funcs = [
+        help_modal,
+        botAI,
+        restart,
+        stats,
+        hints,
+        settings,
+        ended,
+    ];
     let modal = new Modal(MODAL_LOC, modal_funcs);
 
     // initialize the words (which starts the game)
@@ -356,6 +364,74 @@ document.addEventListener('DOMContentLoaded', function () {
         return body;
     }
 
+    // builds hints modal
+    function hints() {
+        // elems
+        let elems = [];
+        elems.push(Utils.create('h1', {
+            className: 'modal-h1',
+            textContent: 'Hints',
+        }));
+
+        // append hints_div + appropriate info
+        let hints_div = Utils.create('div', {})
+        if (HELP) {
+            // get distribution
+            let distribution = computeProbabilityDistribution(gameState.gameWords);
+
+            // add quick helpful text
+            hints_div.append(Utils.create('p', {
+                textContent: "Hints are provided in the form of a distribution of characters. The top five are highly recommended in your guess, to eliminate as many other words as possible."
+            }))
+
+            // compute top_five
+            let top_five = getTopFive(distribution)
+            hints_div.append(Utils.create('h2', {
+                className: 'model-h2',
+                textContent: 'Top 5'
+            }));
+
+            // place top 5 in row
+            let t5_grid = Utils.create('div', { className: 'game-grid' });
+            let t5_row = Utils.create('div', { className: 'game-row' });
+            for (const val of top_five) {
+                t5_row.append(Utils.create('div', {
+                    className: 'game-cell correct',
+                    textContent: val
+                }))
+            }
+            t5_grid.append(t5_row);
+            hints_div.append(t5_grid);
+
+            // add every letter to a row
+            hints_div.append(Utils.create('h2', {
+                className: 'modal-h2',
+                textContent: "Letter Distribution"
+            }))
+            let row = Utils.create('div', { className: 'row' })
+            for (const [key, value] of distribution) {
+                row.append(Utils.create('div', {
+                    className: 'col-3',
+                    textContent: `${key}: ${value.toFixed(2)}%`
+                }))
+            }
+            hints_div.append(row);
+
+        }
+        else {
+            hints_div.append(Utils.create('div', {
+                className: 'text-center',
+                textContent: 'Sorry! Hints are not enabled!'
+            }));
+        }
+        elems.push(hints_div)
+
+        // add everything to a div
+        let body = Utils.create('div', {})
+        body.append(...elems)
+        return body;
+    }
+
     // builds the end-game modal
     function ended() {
         let elems = [];
@@ -562,6 +638,67 @@ document.addEventListener('DOMContentLoaded', function () {
         div.append(createStat('maxStreak', 'Max Streak', stats));
 
         return div;
+    }
+
+    function computeProbabilityDistribution(words) {
+        console.log(words)
+        // initializations
+        let wordlen = words[0].length;
+
+        // ... init hint_bot to help do stuff
+        let hint_bot = new Bot({
+            wordList: words.slice(),
+            length: wordlen,
+            guesses: gameState.guessCount,
+            DEBUG: DEBUG,
+        });
+
+        // ... init distribution
+        let d = new Map()
+        for (const letter of "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
+            d.set(letter, 0);
+        }
+
+        // loop over every guess + rating and feed to bot
+        for (const idx in gameState.guesses) {
+            hint_bot.update(gameState.guesses[idx], gameState.ratings[idx])
+        }
+
+        // loop over to compute distribution
+        let smaller_list = hint_bot.wordList;
+        let n_words = smaller_list.length;
+        for (let i = 0; i < n_words; i++) {
+            let word = smaller_list[i];
+            // for every letter in word, increment its value
+            for (let j = 0; j < wordlen; j++) {
+                // only set if it's a letter in the distribution
+                if (d.has(word[j])) {
+                    d.set(word[j], d.get(word[j]) + 1)
+                }
+            }
+        }
+
+        // loop over final distribution to compute a probability
+        let count = n_words * wordlen;
+        for (const [key, value] of d) {
+            d.set(key, value / count * 100)
+        }
+
+        // return the sorted map
+        return new Map([...d.entries()].sort((a, b) => b[1] - a[1]));
+    }
+
+    function getTopFive(dist) {
+        let top_five = []
+        let count = 0;
+        for (const [key, value] of dist) {
+            top_five.push(key)
+            count++;
+            if (count >= 5) {
+                break;
+            }
+        }
+        return top_five
     }
 
 });

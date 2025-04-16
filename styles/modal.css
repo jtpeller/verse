@@ -28,7 +28,7 @@
 
 .game-btns {
     display: grid;
-    grid-template-columns: repeat(5, 0fr);
+    grid-template-columns: repeat(6, 0fr);
     grid-gap: 5px;
 
     align-items: center;

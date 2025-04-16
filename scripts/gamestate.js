@@ -31,6 +31,7 @@ class GameState {
         this.letter = 0;            // which letter of the guess (row)
         this.#word = "";            // word to guess
         this.guesses = [];          // all guesses from the user, for checking duplicates 
+        this.ratings = [];          // all ratings for those guesses, for hints or other stuff.
         this.correct = false;       // whether user found the word 
         this.finished = false;      // if the game finished. used to prevent devtool abuse. I'm looking at you, cheater. 
         this.winner = false;        // whether user beat the bot
@@ -267,6 +268,7 @@ class GameState {
 
         // rate the guess on the board
         let rating = this.rate.rateGuess(guess);
+        this.ratings.push(rating);
         this.#showRating(guess, rating);
 
         // increment guess counter, as we have eliminated edge cases
