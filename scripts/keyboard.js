@@ -106,6 +106,9 @@ class Keyboard {
                 key.classList.remove(this.classes[i]);
             });
         }
+
+        // set enabled
+        this.setEnabled(true);
     }
 
     // enables caller to enable or disable the keyboard.

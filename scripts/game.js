@@ -522,7 +522,9 @@ document.addEventListener('DOMContentLoaded', function () {
             textContent: `Play Another`,
             onclick: () => {
                 document.querySelector('#modal-close-btn').click();
-                gameState.resetGameState();
+                if (gameState) {
+                    gameState.resetGameState();
+                }
             }
         }));
 
