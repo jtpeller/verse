@@ -2775,6 +2775,7 @@ artistry
 artists
 artless
 arts
+artsy
 Arturo
 artwork
 Aruba
@@ -3722,6 +3723,7 @@ Bahama
 Bahamas
 Bahrein
 bail
+bails
 Bailey
 Baileys
 bailiff
@@ -11043,6 +11045,7 @@ cures
 curfew
 curfews
 curing
+curio
 curiosities
 curiosity
 curious
@@ -19057,6 +19060,8 @@ grubs
 grudge
 grudges
 grudgingly
+gruel
+gruels
 gruesome
 gruff
 gruffly
@@ -21214,6 +21219,7 @@ inauguration
 inauspicious
 inboard
 inbound
+inbox
 inbreed
 Inca
 incalculable
@@ -25626,6 +25632,7 @@ maturities
 maturity
 Maude
 maul
+mauls
 Maureen
 Maurice
 Mauricio
@@ -30850,6 +30857,7 @@ Plexiglas
 pliable
 pliant
 plied
+plier
 pliers
 plies
 plight
@@ -31390,6 +31398,7 @@ prayed
 prayer
 prayers
 praying
+prays
 preach
 preached
 preacher
@@ -38118,6 +38127,7 @@ snowshoes
 snowstorm
 snowy
 snub
+snubs
 snuff
 snuffed
 snuffer
@@ -40760,6 +40770,7 @@ tabulation
 tabulations
 tabulator
 tabulators
+tache
 tachometer
 tachometers
 tacit
@@ -40918,6 +40929,7 @@ tarps
 tarry
 Tarrytown
 tart
+tarte
 Tartary
 tartly
 tartness
@@ -41541,6 +41553,7 @@ thrower
 throwing
 thrown
 throws
+thrum
 thrush
 thrust
 thruster

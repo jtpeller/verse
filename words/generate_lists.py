@@ -1,68 +1,57 @@
-# =================================================================
-# = generate_lists.py
-# =  Description   : Generates the word lists from words.txt
-# =  Author        : jtpeller
-# =  Date          : 2025.01.03
-# =================================================================
+"""
+generate_lists.py
+- Description   : Generates the word lists from words.txt
+- Author        : jtpeller
+- Date          : 2025.01.03
+"""
 
-def remove_uppercase():
-    """ 
-    Removes all uppercase words from words.txt
-    Don't want proper names in the final word lists.
-    """
 
-    print("Removing uppercase words from list.")
-    with open("words.txt", encoding="utf-8") as f:
+def read_file(file: str) -> list[str]:
+    """ Reads the file at $file """
+    with open(file, encoding="utf-8") as f:
         s = f.read()
+        words = s.splitlines()
+    return words
 
-        if "\r\n" in s:
-            print("CRLF detected")
-            words = s.split("\r\n")
-        else:
-            print("LF detected")
-            words = s.split("\n")
 
-        copy = words.copy()
+def write_file(filename: str, word_list: list[str]):
+    """ Writes $word_list to $filename"""
+    with open(filename, 'w', encoding='utf-8') as f:
+        for word in word_list:
+            f.write("".join(word) + "\n")
 
-        for word in words:
-            if word[0] == word[0].upper():
-                copy.remove(word)
 
-        with open('output.txt', 'w', encoding="utf-8") as output:
-            for line in copy:
-                output.write("".join(line) + "\n")    # default to LF
+def filter_words(words: list[str]) -> list[str]:
+    """ Removes words w/ uppercase, words < 3 and > 12 chars, and duplicates """
+    copy = words.copy()
+    for idx, word in enumerate(words):
+        if word[0] == word[0].upper() or len(word) < 3 or len(word) > 12 or word == words[idx-1]:
+            copy.remove(word)
+    return copy
 
-def splitter():
+
+def splitter(words: list[str]):
     """ this splits the larger text file (output.txt) by word length """
-    with open("output.txt", encoding="utf-8") as f:
-        s = f.read()
-        
-        # denote whether CRLF or LF.
-        if "\r\n" in s:
-            print("CRLF detected")
-            words = s.split("\r\n")
-        else:
-            print("LF detected")
-            words = s.split("\n")
+    # create a mapping of the words by length
+    mapping: dict[int, list[str]] = {}
+    for word in words:
+        letters = len(word)
+        try:
+            mapping[letters].append(word)
+        except KeyError:
+            mapping[letters] = [word]
 
-        # loop over each of the applicable word lengths
-        for length in range(3, 13):
-            working_list = []
-            print("Length =", length)
+    # write to file
+    for k, v in mapping.items():
+        write_file(f"words-{k}.txt", v)
 
-            for word in words:
-                if len(word) == length:
-                    working_list.append(word)
-
-            filename = 'words-'+str(length)+'.txt'
-
-            with open(filename, 'w', encoding="utf-8") as output:
-                for line in working_list:
-                    output.write("".join(line) + "\n")    # default to CRLF
 
 def main():
     """ main function """
-    remove_uppercase()
-    splitter()
+    words = read_file("words.txt")
+    words.sort()
+    removed = filter_words(words)
+    splitter(removed)
+
 
 main()

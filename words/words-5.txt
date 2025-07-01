@@ -149,6 +149,7 @@ arose
 array
 arrow
 arson
+artsy
 ascot
 ashen
 ashes
@@ -204,6 +205,7 @@ badge
 badly
 bagel
 baggy
+bails
 baits
 baked
 baker
@@ -540,6 +542,7 @@ chaff
 chain
 chair
 chalk
+champ
 chant
 chaos
 chaps
@@ -740,6 +743,7 @@ cults
 curbs
 cured
 cures
+curio
 curls
 curly
 curry
@@ -801,6 +805,7 @@ depth
 derby
 desks
 deter
+detox
 deuce
 devil
 dials
@@ -1327,6 +1332,7 @@ growl
 grown
 grows
 grubs
+gruel
 gruff
 grunt
 guano
@@ -1497,6 +1503,7 @@ image
 impel
 imply
 inane
+inbox
 incur
 index
 inept
@@ -1768,6 +1775,7 @@ match
 mated
 mater
 mates
+mauls
 maxim
 maybe
 mayor
@@ -2122,6 +2130,7 @@ plead
 pleas
 pleat
 plied
+plier
 plies
 plots
 plows
@@ -2172,6 +2181,7 @@ pouts
 power
 prank
 prate
+prays
 preen
 press
 preys
@@ -2663,6 +2673,7 @@ snort
 snout
 snows
 snowy
+snubs
 snuff
 soaks
 soaps
@@ -2861,6 +2872,7 @@ synod
 syrup
 table
 taboo
+tache
 tacit
 tails
 taint
@@ -2881,6 +2893,7 @@ tapes
 tardy
 tarps
 tarry
+tarte
 tasks
 taste
 tasty
@@ -2927,6 +2940,7 @@ three
 threw
 throb
 throw
+thrum
 thuds
 thugs
 thumb
