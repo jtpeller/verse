@@ -321,7 +321,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // ... are you sure?
         elems.push(Utils.create('h1', {
             className: "modal-h2",
-            textContent: "Are you sure you want to restart? You'll keep your stats...",
+            textContent: "Are you sure you want to restart?",
         }))
 
         // ... confirm buttons
