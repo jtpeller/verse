@@ -22981,6 +22981,7 @@ joins
 joint
 jointly
 joints
+joist
 joke
 joked
 joker

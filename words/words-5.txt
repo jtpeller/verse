@@ -167,6 +167,7 @@ atlas
 atoll
 atoms
 atone
+atria
 attic
 audio
 audit
@@ -1546,6 +1547,7 @@ jewel
 jiffy
 joins
 joint
+joist
 joked
 joker
 jokes
